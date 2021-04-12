@@ -66,7 +66,7 @@ public class Settlement {
 		return sickPeople/this.people.size();
 	}
 	
-	public Point randomLocation() { ;}
+	public Point randomLocation() {}
 	
 	public boolean addPerson(Person p) {
 		
@@ -81,3 +81,4 @@ public class Settlement {
 		
 		return true;
 	}
+}

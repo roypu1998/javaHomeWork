@@ -1,8 +1,31 @@
 package Country;
 
+import Population.Healthy;
+import Population.Person;
+
 public class Map {
 	
-	Settlements [] settlements;
+	private Settlement [] settlements;
+	
+
+	public Settlement[] getSettlements() {
+		return settlements;
+	}
+	
+	public void setSize(int size) {
+		
+		this.settlements=new Settlement[size];
+	}
+
+	public void updateSettelments(Settlement sett,int index) {
+		
+		this.settlements[index]=sett;
+		
+	}
+	
+	
+	
+	
 	
 	
 }
