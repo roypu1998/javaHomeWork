@@ -19,7 +19,7 @@ public class Map {
 
 	public void updateSettelments(Settlement sett,int index) {
 		
-		this.settlements[index]=sett;
+		this.getSettlements()[index]=sett;
 		
 	}
 	
