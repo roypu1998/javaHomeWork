@@ -14,6 +14,13 @@ public abstract class Person {
 	
 	public abstract double contagionProbability();
 	
+	public Person(int age, Point p, Settlement sett) {
+		
+		this.age=age;
+		this.location=p;
+		this.settlement=sett;
+	}
+	
 	public Person contagion (IVirus virus) {
 		Sick s=new Sick();
 		s.setAge(this.age);

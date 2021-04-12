@@ -1,5 +1,5 @@
 package Virus;
-
+import java.util.Random;
 import Population.*;
 
 public class BritishVariant implements IVirus{
@@ -16,14 +16,25 @@ public class BritishVariant implements IVirus{
 
 	@Override
 	public boolean tryToKill(Sick s) {
+		Random rand = new Random();
+		
 		double probability;
+		
 		if(s.getAge()<18)
 			probability=0.01;
+		
 		else
 			probability=0.10;
+		
 		double die=Math.max(0, probability-0.01*probability*(Math.pow(s.getContagiousTime()-15,2)));
-
-		return 
+		
+		double rnd=rand.nextDouble();
+		
+		if( die >= rnd) {
+			return true;
+		}
+		
+		return false;
 
 	}
 	

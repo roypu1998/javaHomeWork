@@ -23,9 +23,9 @@ public class SimulationFile {
 	        this.sett=new Map();
 	        
 	        String str;
-	        City c=new City();
-	        Kibbutz k=new Kibbutz();
-	        Moshav m=new Moshav();
+	        City city;
+	        Kibbutz kibbutz;
+	        Moshav moshav;
 	  
 	        int index=0,lines=0;
 	        
@@ -60,35 +60,39 @@ public class SimulationFile {
 	        	l.setSize(size);
 	        	
 	        	
-	        	if(type == "City") {
-	        		c.setName(strName);
-	        		c.setLocation(l);
-	        		c.setRamzorColor(RamzorColor.Green);
-	        		this.sett.updateSettelments(c, index);
+	        	if(type.equals("City")) {
+	        		city=new City();
+	        		city.setName(strName);
+	        		city.setLocation(l);
+	        		city.setRamzorColor(RamzorColor.Green);
+	        		this.sett.updateSettelments(city, index);
 	        		System.out.println("Successed !");
 	        		index++;
 	        		
 	        	}
 	        	
-	        	else if( type == "Moshav") {
-	        		m.setName(strName);
-	        		m.setLocation(l);
-	        		m.setRamzorColor(RamzorColor.Green);
-	        		this.sett.updateSettelments(m, index);
+	        	else if( type.equals("Moshav")) {
+	        		moshav=new Moshav();
+	        		moshav.setName(strName);
+	        		moshav.setLocation(l);
+	        		moshav.setRamzorColor(RamzorColor.Green);
+	        		this.sett.updateSettelments(moshav, index);
 	        		System.out.println("Successed !");
 	        		index++;
 	        	}
 	        			
-	        	else if (type == "Kibbutz") {
-	        		k.setName(strName);
-	        		k.setLocation(l);
-	        		k.setRamzorColor(RamzorColor.Green);
-	        		this.sett.updateSettelments(k, index);
+	        	else if (type.equals("Kibbutz")) {
+	        		kibbutz=new Kibbutz();
+	        		kibbutz.setName(strName);
+	        		kibbutz.setLocation(l);
+	        		kibbutz.setRamzorColor(RamzorColor.Green);
+	        		this.sett.updateSettelments(kibbutz, index);
 	        		System.out.println("Successed !");
 	        		index++;
 
 	        		}
 	        		
+	        	
 	        	
 	        	}
 

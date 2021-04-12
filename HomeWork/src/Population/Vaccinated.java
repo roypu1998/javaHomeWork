@@ -2,11 +2,23 @@ package Population;
 
 import java.math.*;
 
+import Country.Settlement;
+import Location.Point;
+import Virus.IVirus;
+
 public class Vaccinated extends Person {
 
 	private double coefficientProbability ;
 	
 	private long vaccinationTime;
+	
+	public Vaccinated(int age,Point p,Settlement s,double coeff,long vacc){
+		
+		super(age,p,s);
+		
+		this.coefficientProbability=coeff;
+		this.vaccinationTime=vacc;
+	}
 	
 	public long getVaccinationTime() {
 		return vaccinationTime;

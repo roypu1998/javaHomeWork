@@ -1,11 +1,23 @@
 package Population;
 import Virus.IVirus;
+import Country.Settlement;
+import Location.Point;
 import Simulation.Clock;
 public class Sick extends Person{
 	
 	private long contagiousTime;
 	
 	private IVirus virus;
+	
+	
+	
+	public Sick(int age,Point p,Settlement s,long con,IVirus vir){
+		
+		super(age,p,s);
+		
+		this.contagiousTime=con;
+		this.virus=vir;
+	}
 	
 	public long getContagiousTime() {
 		contagiousTime=Clock.now()-this.contagiousTime;
@@ -32,8 +44,8 @@ public class Sick extends Person{
 
 	@Override
 	public double contagionProbability() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return 0.001;
 	}
 	
 
