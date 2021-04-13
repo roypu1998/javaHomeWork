@@ -40,9 +40,7 @@ public class SouthAfricanVariant implements IVirus{
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
-			
-			System.out.println("Random : "+rnd+"\n"+"per : "+percentage);
-			
+						
 			if( percentage < rnd ) { 
 				
 				return true;
