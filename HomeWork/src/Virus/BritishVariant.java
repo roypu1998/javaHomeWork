@@ -1,6 +1,5 @@
 package Virus;
 import java.util.Random;
-
 import Location.Point;
 import Population.*;
 

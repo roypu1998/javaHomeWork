@@ -43,7 +43,7 @@ public class SouthAfricanVariant implements IVirus{
 			
 			System.out.println("Random : "+rnd+"\n"+"per : "+percentage);
 			
-			if( percentage > rnd ) { 
+			if( percentage < rnd ) { 
 				
 				return true;
 			}

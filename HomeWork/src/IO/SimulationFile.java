@@ -14,10 +14,11 @@ import Population.*;
 public class SimulationFile {
 
 	private Map sett;
-
+	Random rand=new Random();
 
 	public void ReadFile() {
 		Random ran= new Random();
+		
 		try {
 	        BufferedReader inFile = new BufferedReader(new FileReader("src/homework_IO.txt"));
 	       
@@ -57,7 +58,7 @@ public class SimulationFile {
 	        		city=new City(strName,l,RamzorColor.Green);
 	        		this.getSett().updateSettelments(city, index);
 	        		for (int i=0; i<numberOfPeople;i++) {
-	        			age=(int) (6*ran.nextGaussian()+ 9);
+	        			age=Math.abs(5*(int)(6*ran.nextGaussian()+ 9)+rand.nextInt(5));
 	        			randPoint= new Point(city.randomLocation().getX(),city.randomLocation().getY());
 	        			set=this.getSett().getSettlements()[index];
 	        			ppl=new Healthy(age, randPoint,set);
