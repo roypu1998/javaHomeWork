@@ -1,6 +1,12 @@
 package Country;
 
+import Location.Location;
+
 public class City extends Settlement {
+	
+	public City (String name, Location location,RamzorColor ramzorColor) {
+		super(name,  location, ramzorColor);
+	}
 
 	public RamzorColor calculateRamzorGrade() {
 		

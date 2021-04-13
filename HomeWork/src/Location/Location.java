@@ -6,6 +6,11 @@ public class Location {
 	
 	private Size size;
 
+	public Location(Point p, Size s) {
+		this.position=p;
+		this.size=s;
+	}
+	
 	public Point getPosition() {
 		return position;
 	}

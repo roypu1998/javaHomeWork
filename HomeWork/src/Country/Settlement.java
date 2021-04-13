@@ -16,9 +16,11 @@ public class Settlement {
 	
 	private RamzorColor ramzorColor;
 	
-	public Settlement () {
-		
+	public Settlement (String name, Location location,RamzorColor ramzorColor) {
+		this.name=name;
+		this.location=location;
 		this.people=new ArrayList<>();
+		this.ramzorColor=ramzorColor;
 	}
 
 	public String getName() {
@@ -86,9 +88,7 @@ public class Settlement {
 		int random_x= (int)Math.floor(Math.random()*((x+w)-x+1)+x);
 		int random_y = (int)Math.floor(Math.random()*((y+h)-x+1)+y);
 		
-		Point p=new Point();
-		p.setX(random_x);
-		p.setY(random_y);
+		Point p=new Point(random_x,random_y);
 		return p;
 		
 	}

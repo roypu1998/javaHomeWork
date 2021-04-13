@@ -1,6 +1,13 @@
 package Country;
 
+import Location.Location;
+
 public class Kibbutz extends Settlement {
+	
+	public Kibbutz (String name, Location location,RamzorColor ramzorColor) {
+		super(name,  location, ramzorColor);
+	}
+
 	
 	public RamzorColor calculateRamzorGrade() {
 		

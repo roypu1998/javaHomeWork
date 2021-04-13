@@ -6,17 +6,18 @@ import java.io.FileNotFoundException;  // Import this class to handle errors
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.Random;
 import java.util.Scanner; // Import the Scanner class to read text files
-
 import Country.*;
 import Location.*;
-
+import Population.*;
 public class SimulationFile {
 
 	private Map sett;
-	
+
+
 	public void ReadFile() {
-		
+		Random ran= new Random();
 		try {
 	        BufferedReader inFile = new BufferedReader(new FileReader("src/homework_IO.txt"));
 	       
@@ -41,50 +42,54 @@ public class SimulationFile {
 	        while ((str = inFile2.readLine())!=null ){
 	        	
 	        	String [] s=str.split(";");
-	        	
 	        	String type,strName;
-	        	Point p=new Point();
-	        	Size size=new Size();
-	        	Location l=new Location();
-	        	
+	        	Point p=new Point(Integer.parseInt(s[2]),Integer.parseInt(s[3]));
+	        	Size size=new Size(Integer.parseInt(s[4]),Integer.parseInt(s[5]));
+	        	Location l=new Location(p,size);
 	        	type=s[0];
-	        	
 	        	strName=s[1];
-	        	
-	        	p.setX(Integer.parseInt(s[2]));
-	        	p.setY(Integer.parseInt(s[3]));
-	        	l.setPosition(p);
-	        	
-	        	size.setWidth(Integer.parseInt(s[4]));
-	        	size.setHeight(Integer.parseInt(s[5]));
-	        	l.setSize(size);
-	        	
-	        	
+	        	int age;
+	        	Person ppl;
+	        	Point randPoint;
+	        	int numberOfPeople=Integer.parseInt(s[6]);
+	        	Settlement set;
 	        	if(type.equals("City")) {
-	        		city=new City();
-	        		city.setName(strName);
-	        		city.setLocation(l);
-	        		city.setRamzorColor(RamzorColor.Green);
-	        		this.sett.updateSettelments(city, index);
-	        		index++;
+	        		city=new City(strName,l,RamzorColor.Green);
+	        		this.getSett().updateSettelments(city, index);
+	        		for (int i=0; i<numberOfPeople;i++) {
+	        			age=(int) (6*ran.nextGaussian()+ 9);
+	        			randPoint= new Point(city.randomLocation().getX(),city.randomLocation().getY());
+	        			set=this.getSett().getSettlements()[index];
+	        			ppl=new Healthy(age, randPoint,set);
+		        		this.getSett().getSettlements()[index].addPerson(ppl);
+	        		}
+	    	        index++;
 	        		
 	        	}
 	        	
 	        	else if( type.equals("Moshav")) {
-	        		moshav=new Moshav();
-	        		moshav.setName(strName);
-	        		moshav.setLocation(l);
-	        		moshav.setRamzorColor(RamzorColor.Green);
+	        		moshav=new Moshav(strName,l,RamzorColor.Green);
 	        		this.sett.updateSettelments(moshav, index);
+	        		for (int i=0; i<numberOfPeople;i++) {
+	        			age=(int) (6*ran.nextGaussian()+ 9);
+	        			randPoint= new Point(moshav.randomLocation().getX(),moshav.randomLocation().getY());
+	        			set=this.getSett().getSettlements()[index];
+	        			ppl=new Healthy(age, randPoint,set);
+		        		this.getSett().getSettlements()[index].addPerson(ppl);
+	        		}
 	        		index++;
 	        	}
 	        			
 	        	else if (type.equals("Kibbutz")) {
-	        		kibbutz=new Kibbutz();
-	        		kibbutz.setName(strName);
-	        		kibbutz.setLocation(l);
-	        		kibbutz.setRamzorColor(RamzorColor.Green);
+	        		kibbutz=new Kibbutz(strName,l,RamzorColor.Green);
 	        		this.sett.updateSettelments(kibbutz, index);
+	        		for (int i=0; i<numberOfPeople;i++) {
+	        			age=(int) (6*ran.nextGaussian()+ 9);
+	        			randPoint= new Point(kibbutz.randomLocation().getX(),kibbutz.randomLocation().getY());
+	        			set=this.getSett().getSettlements()[index];
+	        			ppl=new Healthy(age, randPoint,set);
+		        		this.getSett().getSettlements()[index].addPerson(ppl);
+	        		}
 	        		index++;
 
 	        		}

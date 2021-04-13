@@ -53,7 +53,6 @@ public class SouthAfricanVariant implements IVirus{
 				
 				s2=new Sick(p2.getAge(),p2.getLocation(),p2.getSettlement(),0,s1.getVirus());
 				
-				
 				p2.getSettlement().getPeople().add(s2);
 				
 				s2.getSettlement().getPeople().remove(p2);
