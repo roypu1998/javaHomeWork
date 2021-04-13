@@ -23,6 +23,12 @@ public class Map {
 		
 	}
 	
+	public void printSett() {
+		System.out.println("hey2");
+		for(int i=0; i<this.getSettlements().length; i++)
+			System.out.println(this.getSettlements()[i]);
+	}
+	
 	
 	
 	

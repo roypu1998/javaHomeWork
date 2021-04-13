@@ -66,7 +66,6 @@ public class SimulationFile {
 	        		city.setLocation(l);
 	        		city.setRamzorColor(RamzorColor.Green);
 	        		this.sett.updateSettelments(city, index);
-	        		System.out.println("Successed !");
 	        		index++;
 	        		
 	        	}
@@ -77,7 +76,6 @@ public class SimulationFile {
 	        		moshav.setLocation(l);
 	        		moshav.setRamzorColor(RamzorColor.Green);
 	        		this.sett.updateSettelments(moshav, index);
-	        		System.out.println("Successed !");
 	        		index++;
 	        	}
 	        			
@@ -87,7 +85,6 @@ public class SimulationFile {
 	        		kibbutz.setLocation(l);
 	        		kibbutz.setRamzorColor(RamzorColor.Green);
 	        		this.sett.updateSettelments(kibbutz, index);
-	        		System.out.println("Successed !");
 	        		index++;
 
 	        		}

@@ -1,5 +1,7 @@
 package Country;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Location.*;
 import Population.*;
@@ -13,6 +15,11 @@ public class Settlement {
 	private List<Person> people;
 	
 	private RamzorColor ramzorColor;
+	
+	public Settlement () {
+		
+		this.people=new ArrayList<>();
+	}
 
 	public String getName() {
 		return name;
@@ -66,11 +73,29 @@ public class Settlement {
 		return sickPeople/this.people.size();
 	}
 	
-	public Point randomLocation() {}
+	public Point randomLocation() {
+		
+		int x,y,w,h;
+		
+		x=this.getLocation().getPosition().getX();	
+		y=this.getLocation().getPosition().getY();
+		
+		w=this.getLocation().getSize().getWidth();
+		h=this.getLocation().getSize().getHeight();	
+		
+		int random_x= (int)Math.floor(Math.random()*((x+w)-x+1)+x);
+		int random_y = (int)Math.floor(Math.random()*((y+h)-x+1)+y);
+		
+		Point p=new Point();
+		p.setX(random_x);
+		p.setY(random_y);
+		return p;
+		
+	}
 	
 	public boolean addPerson(Person p) {
 		
-		this.people.add(p);
+		this.getPeople().add(p);
 		
 		return true;
 	}
@@ -80,5 +105,10 @@ public class Settlement {
 		s.people.add(p);
 		
 		return true;
+	}
+	
+	public void printPeople() {
+		
+		System.out.println(this.getPeople());
 	}
 }

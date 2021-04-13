@@ -17,11 +17,8 @@ public class Main {
 		
 		simulationfile.ReadFile();
 		
-		int size=simulationfile.getSett().getSettlements().length;
-		/*
-		for(int i=0; i<size; i++)
-			System.out.println(simulationfile.getSett().getSettlements()[i]);
-			*/		
+		
+		
 		Point point1=new Point();
 		Point point2=new Point();
 		
@@ -37,9 +34,16 @@ public class Main {
 		
 		Person p2=new Healthy(28,point2,simulationfile.getSett().getSettlements()[0]);
 		
+		sett.addPerson(p1);
+		sett.addPerson(p2);
+		
 		IVirus virus=new SouthAfricanVariant();
 		
 		virus.tryToContagion(p1, p2);
+		
+		
+		
+		simulationfile.getSett().printSett();
 		
 		
 	}

@@ -32,7 +32,8 @@ public class SouthAfricanVariant implements IVirus{
 		return contagionprobability*p.contagionProbability();
 	}
 		
-	public boolean tryToContagion(Person p1, Person p2) {		
+	public boolean tryToContagion(Person p1, Person p2) {	
+		
 			
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
 		
@@ -47,20 +48,17 @@ public class SouthAfricanVariant implements IVirus{
 			
 			System.out.println(rnd+", "+percentage);
 			
-			if( percentage > rnd ) { 
+			if( percentage < rnd ) { 
 				
-				System.out.println("hey");
-				s2=new Sick();
-				s2.setVirus(s1.getVirus());
-		
-				s2.setContagiousTime(0);
-				s2.setAge(p2.getAge());
-				s2.setLocation(p2.getLocation());
-				s2.setSettlement(p2.getSettlement());
+				
+				s2=new Sick(p2.getAge(),p2.getLocation(),p2.getSettlement(),0,s1.getVirus());
 				
 				
 				p2.getSettlement().getPeople().add(s2);
+				
 				s2.getSettlement().getPeople().remove(p2);
+				
+				s2.getSettlement().printPeople();
 				
 				return true;
 			}
