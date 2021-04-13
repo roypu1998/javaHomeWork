@@ -38,13 +38,19 @@ public class Sick extends Person{
 
 	
 	public Person recover(){
+		Healthy h= new Healthy(this.getAge(), this.getLocation(), this.getSettlement());
+		this.getSettlement().addPerson(h);
+		this.getSettlement().getPeople().remove(this);
+		return h;
 	}
 	
-	public boolean tryToDie(){}
-
-	@Override
-	public double contagionProbability() {
+	public boolean tryToDie(){
+		return this.virus.tryToKill(this);
 		
+	}
+
+	
+	public double contagionProbability() {
 		return 0.001;
 	}
 	

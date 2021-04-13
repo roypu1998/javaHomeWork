@@ -1,6 +1,7 @@
 package Population;
 import Country.*;
 import Location.*;
+import Simulation.Clock;
 import Virus.*;
 
 
@@ -22,12 +23,7 @@ public abstract class Person {
 	}
 	
 	public Person contagion (IVirus virus) {
-		Sick s=new Sick();
-		s.setAge(this.age);
-		s.setLocation(this.location);
-		s.setSettlement(this.settlement);
-		s.setVirus(virus);
-		s.setContagiousTime(0);
+		Sick s=new Sick(this.age,this.location,this.settlement,Clock.now(),virus);
 		return s;
 	}
 

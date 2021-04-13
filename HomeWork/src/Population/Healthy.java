@@ -2,6 +2,7 @@ package Population;
 
 import Country.Settlement;
 import Location.Point;
+import Simulation.Clock;
 import Virus.IVirus;
 
 public class Healthy extends Person{
@@ -15,7 +16,12 @@ public class Healthy extends Person{
 	}
 	
 	public Person vaccinate() {
-		return null;
+		Clock c=new Clock();
+		Vaccinated vac= new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(),this.coefficientProbability,c.now());
+		this.getSettlement().addPerson(vac);
+		this.getSettlement().getPeople().remove(this);
+		return vac;
+
 	}
 	
 	public double getCProbability() {
@@ -25,7 +31,6 @@ public class Healthy extends Person{
 
 	@Override
 	public double contagionProbability() {
-		// TODO Auto-generated method stub
 		return 0.002;
 	}
 }

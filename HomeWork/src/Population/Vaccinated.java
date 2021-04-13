@@ -4,6 +4,7 @@ import java.math.*;
 
 import Country.Settlement;
 import Location.Point;
+import Simulation.Clock;
 import Virus.IVirus;
 
 public class Vaccinated extends Person {
@@ -15,13 +16,14 @@ public class Vaccinated extends Person {
 	public Vaccinated(int age,Point p,Settlement s,double coeff,long vacc){
 		
 		super(age,p,s);
-		
 		this.coefficientProbability=coeff;
 		this.vaccinationTime=vacc;
 	}
 	
 	public long getVaccinationTime() {
-		return vaccinationTime;
+		Clock c=new Clock();
+		
+		return (c.now()-this.vaccinationTime)/24;
 	}
 
 	public void setVaccinationTime(long vaccinationTime) {
@@ -44,8 +46,16 @@ public class Vaccinated extends Person {
 
 	@Override
 	public double contagionProbability() {
-		// TODO Auto-generated method stub
-		return 0;
+		Clock c= new Clock();
+		long t=this.getVaccinationTime();
+		double v;
+		if (t<21) {
+			v=Math.min(1.0, 0.56+(0.15*(Math.sqrt(21-t))));
+		}
+		else {
+			v=Math.max(0.05, (1.05/(t-14)));
+		}
+		return v;
 	}
 	
 }

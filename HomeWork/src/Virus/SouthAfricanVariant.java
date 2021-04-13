@@ -3,7 +3,7 @@ import java.util.Random;
 
 import Location.Point;
 import Population.*;
-
+import Country.*;
 
 public class SouthAfricanVariant implements IVirus{
 	
@@ -34,36 +34,21 @@ public class SouthAfricanVariant implements IVirus{
 		
 	public boolean tryToContagion(Person p1, Person p2) {	
 		
-			
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
 		
-		Sick s1= (Sick) p1;
-		
-		Sick s2;
-		
-		if(!(p2 instanceof Sick)) {
+		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
 			
-			System.out.println(rnd+", "+percentage);
+			System.out.println("Random : "+rnd+"\n"+"per : "+percentage);
 			
-			if( percentage < rnd ) { 
-				
-				
-				s2=new Sick(p2.getAge(),p2.getLocation(),p2.getSettlement(),0,s1.getVirus());
-				
-				p2.getSettlement().getPeople().add(s2);
-				
-				s2.getSettlement().getPeople().remove(p2);
-				
-				s2.getSettlement().printPeople();
+			if( percentage > rnd ) { 
 				
 				return true;
 			}
-			
 		}
-			
+		
 		return false;
 	}
 
