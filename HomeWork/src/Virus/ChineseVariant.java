@@ -10,6 +10,7 @@ import java.math.*;
 public class ChineseVariant implements IVirus {
 	
 	Random rand= new Random();
+	
 	public double contagionProbability(Person p) {
 		
 		double contagionprobability;
@@ -79,6 +80,9 @@ public class ChineseVariant implements IVirus {
 
 	}
 
+	public String toString() {
+		return "ChineseVariant";
+	}
 
 	
 }

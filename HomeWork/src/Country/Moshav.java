@@ -19,4 +19,8 @@ public class Moshav extends Settlement {
 		return rc.getName(c);
 	}
 	
+	public String toString() {
+		return "Moshav "+super.toString();
+				
+	}
 }

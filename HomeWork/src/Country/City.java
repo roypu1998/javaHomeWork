@@ -16,4 +16,9 @@ public class City extends Settlement {
 		
 		return rc.getName(c);
 	}
+	
+	public String toString() {
+		return "City "+super.toString();
+				
+	}
 }

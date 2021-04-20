@@ -33,4 +33,9 @@ public class Healthy extends Person{
 	public double contagionProbability() {
 		return 0.002;
 	}
+	
+	public String toString() {
+		return "Healthy {"+super.toString()+
+				"coefficientProbability= "+ this.coefficientProbability+"}";
+	}
 }

@@ -26,6 +26,10 @@ public class Location {
 	public void setSize(Size size) {
 		this.size = size;
 	}
-	
+
+	public String toString() {
+		return "Location {point= "+ this.position.toString()+" size= "+this.size.toString()+"}";
+	}
+
 	
 }

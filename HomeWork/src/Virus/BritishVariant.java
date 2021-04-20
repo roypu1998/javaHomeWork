@@ -4,6 +4,7 @@ import Location.Point;
 import Population.*;
 
 public class BritishVariant implements IVirus{
+	
 	Random rand = new Random();
 
 	public double contagionProbability(Person p) {
@@ -61,6 +62,8 @@ public class BritishVariant implements IVirus{
 
 	}
 	
-	
+	public String toString() {
+		return "BritishVariant";
+	}
 
 }

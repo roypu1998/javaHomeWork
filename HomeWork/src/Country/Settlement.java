@@ -111,4 +111,11 @@ public class Settlement {
 		
 		System.out.println(this.getPeople());
 	}
+	
+	public String toString() {
+		return "Settlement {name= " +this.name+" location= "
+	+this.location.toString()+ " ramzorColor= "+this.ramzorColor
+	+" people= "+this.people.toString()+"}";
+				
+	}
 }

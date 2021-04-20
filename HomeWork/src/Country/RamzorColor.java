@@ -30,4 +30,5 @@ public enum RamzorColor {
 	public double getRamzorColor() {
 		return this.ramzor;
 	}
+	
 }

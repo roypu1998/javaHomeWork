@@ -22,6 +22,7 @@ public abstract class Person {
 		this.settlement=sett;
 	}
 	
+	
 	public Person contagion (IVirus virus) {
 		Sick s=new Sick(this.age,this.location,this.settlement,Clock.now(),virus);
 		return s;
@@ -51,5 +52,8 @@ public abstract class Person {
 		this.settlement = settlement;
 	}
 	
-	
+	public String toString() {
+		return "Person { age= "+this.age+" location= "+this.location.toString()+
+				" settlement= "+ this.settlement.toString()+"}";
+	}
 }

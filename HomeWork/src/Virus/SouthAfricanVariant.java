@@ -75,6 +75,9 @@ public class SouthAfricanVariant implements IVirus{
 
 	}
 
+	public String toString() {
+		return "SouthAfricanVariant";
+	}
 
 
 }

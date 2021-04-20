@@ -58,4 +58,9 @@ public class Vaccinated extends Person {
 		return v;
 	}
 	
+	public String toString() {
+		return "Vaccinated {"+super.toString()+
+				"coefficientProbability= "+ this.coefficientProbability+
+				" vaccinationTime= "+ this.vaccinationTime+"}";
+	}
 }

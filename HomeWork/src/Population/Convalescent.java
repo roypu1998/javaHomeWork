@@ -19,6 +19,11 @@ public class Convalescent extends Person {
 	
 	public double contagionProbability() {
 		return this.coefficientProbability; 
-
+		}
+	
+	public String toString() {
+		return "Convalescent {"+super.toString()+
+				"coefficientProbability= "+ this.coefficientProbability+
+				" virus= "+ this.virus.toString()+"}";
 	}
 }

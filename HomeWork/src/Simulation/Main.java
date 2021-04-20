@@ -23,7 +23,6 @@ public class Main {
 		int numOfPpl, sickPpl;
 		Sick sc;
 		
-
 		System.out.println("making 1% of the people sick \n");
 
 		for (int i=0; i<sett.length;i++) {
