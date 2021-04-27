@@ -19,8 +19,17 @@ public class Moshav extends Settlement {
 		return rc.getName(c);
 	}
 	
+	public boolean equals(Object other) {
+		
+		if(this == other )
+			return true;
+		else
+			return false;
+	}
+	
 	public String toString() {
 		return "Moshav "+super.toString();
-				
-	}
+	  
+	 }
+	 
 }

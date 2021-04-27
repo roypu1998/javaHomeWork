@@ -27,8 +27,9 @@ public class Point {
 		this.y = y;
 	}
 	
-	public String toString() {
-		return String.format("Point {x=%d, y=%d}",this.x, this.y );
-	}
+	/*
+	 * public String toString() { return String.format("Point {x=%d, y=%d}",this.x,
+	 * this.y ); }
+	 */
 
 }

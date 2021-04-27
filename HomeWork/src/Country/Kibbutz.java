@@ -18,8 +18,9 @@ public class Kibbutz extends Settlement {
 		return rc.getName(c);
 	}
 	
-	public String toString() {
-		return "Kibbutz "+super.toString();
-				
-	}
+	/*
+	 * public String toString() { return "Kibbutz "+super.toString();
+	 * 
+	 * }
+	 */
 }

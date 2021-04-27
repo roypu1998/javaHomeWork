@@ -62,8 +62,7 @@ public class BritishVariant implements IVirus{
 
 	}
 	
-	public String toString() {
-		return "BritishVariant";
-	}
-
+	/*
+	 * public String toString() { return "BritishVariant"; }
+	 */
 }

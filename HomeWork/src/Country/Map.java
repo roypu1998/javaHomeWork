@@ -29,11 +29,12 @@ public class Map {
 			System.out.println(this.getSettlements()[i]);
 	}
 	
-	public String toString() {
-		return "Map {settelment= "+this.settlements.toString()+"}";
-				
-	}
-	
+	/*
+	 * public String toString() { return
+	 * "Map {settelment= "+this.settlements.toString()+"}";
+	 * 
+	 * }
+	 */
 	
 	
 	

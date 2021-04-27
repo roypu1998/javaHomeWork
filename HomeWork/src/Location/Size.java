@@ -25,7 +25,8 @@ public class Size {
 		this.height = height;
 	}
 	
-	public String toString() {
-		return String.format("Size {width=%d, height=%d}",this.width, this.height );
-	}
+	/*
+	 * public String toString() { return
+	 * String.format("Size {width=%d, height=%d}",this.width, this.height ); }
+	 */
 }

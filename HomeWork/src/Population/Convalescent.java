@@ -21,9 +21,14 @@ public class Convalescent extends Person {
 		return this.coefficientProbability; 
 		}
 	
-	public String toString() {
-		return "Convalescent {"+super.toString()+
-				"coefficientProbability= "+ this.coefficientProbability+
-				" virus= "+ this.virus.toString()+"}";
-	}
+		/*
+		 * public String toString() { return
+		 * "Convalescent {age= "+super.getAge()+" location= "+super.getLocation().
+		 * toString()+ " settlement= "+ super.getSettlement().toString()+
+		 * "coefficientProbability= "+ this.coefficientProbability+ " virus= "+
+		 * this.virus.toString()+"}"; }
+		 */
+	
+	
+	
 }

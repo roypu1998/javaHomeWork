@@ -27,9 +27,10 @@ public class Location {
 		this.size = size;
 	}
 
-	public String toString() {
-		return "Location {point= "+ this.position.toString()+" size= "+this.size.toString()+"}";
-	}
+	/*
+	 * public String toString() { return "Location {point= "+
+	 * this.position.toString()+" size= "+this.size.toString()+"}"; }
+	 */
 
 	
 }

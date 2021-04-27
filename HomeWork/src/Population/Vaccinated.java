@@ -58,9 +58,11 @@ public class Vaccinated extends Person {
 		return v;
 	}
 	
-	public String toString() {
-		return "Vaccinated {"+super.toString()+
-				"coefficientProbability= "+ this.coefficientProbability+
-				" vaccinationTime= "+ this.vaccinationTime+"}";
-	}
+	/*
+	 * public String toString() { return
+	 * "Vaccinated {age= "+super.getAge()+" location= "+super.getLocation().toString
+	 * ()+ " settlement= "+ super.getSettlement().toString()+
+	 * "coefficientProbability= "+ this.coefficientProbability+
+	 * " vaccinationTime= "+ this.vaccinationTime+"}"; }
+	 */
 }

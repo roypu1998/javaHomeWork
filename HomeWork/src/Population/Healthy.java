@@ -34,8 +34,10 @@ public class Healthy extends Person{
 		return 0.002;
 	}
 	
-	public String toString() {
-		return "Healthy {"+super.toString()+
-				"coefficientProbability= "+ this.coefficientProbability+"}";
-	}
+	/*
+	 * public String toString() { return
+	 * "Healthy {age= "+super.getAge()+" location= "+super.getLocation().toString()+
+	 * " settlement= "+ super.getSettlement().toString()+
+	 * "coefficientProbability= "+ this.coefficientProbability+"}"; }
+	 */
 }

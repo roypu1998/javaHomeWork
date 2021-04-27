@@ -53,7 +53,8 @@ public abstract class Person {
 	}
 	
 	public String toString() {
-		return "Person { age= "+this.age+" location= "+this.location.toString()+
-				" settlement= "+ this.settlement.toString()+"}";
-	}
+		return "Person\nPerson's age:"+this.age+"\nLocation:"+this.location+"\nSettlement:"+this.settlement+"\n";
+		
+	} 
+
 }

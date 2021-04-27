@@ -54,10 +54,11 @@ public class Sick extends Person{
 		return 0.001;
 	}
 	
-	public String toString() {
-		return "Sick {"+super.toString()+
-				"contagiousTime= "+ this.contagiousTime+
-				" virus= "+ this.virus.toString()+"}";
-	}
+	/*
+	 * public String toString() { return
+	 * "Sick {age= "+super.getAge()+" location= "+super.getLocation().toString()+
+	 * " settlement= "+ super.getSettlement().toString()+ "contagiousTime= "+
+	 * this.contagiousTime+ " virus= "+ this.virus.toString()+"}"; }
+	 */
 
 }

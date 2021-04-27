@@ -80,9 +80,8 @@ public class ChineseVariant implements IVirus {
 
 	}
 
-	public String toString() {
-		return "ChineseVariant";
-	}
-
+	/*
+	 * public String toString() { return "ChineseVariant"; }
+	 */
 	
 }
