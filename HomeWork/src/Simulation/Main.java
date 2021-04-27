@@ -91,13 +91,14 @@ public class Main {
 	frame= mw.getRoot();
 	List <Location> l= new ArrayList<>();
 	List <String> names= new ArrayList<>();
-	
+	List <RamzorColor> rc= new ArrayList<>();
 	for(int i=0; i<sett.length;i++) {
 		l.add(sett[i].getLocation());
 		names.add(sett[i].getName());
+		rc.add(sett[i].getRamzorColor());
 	}
 	
-	mw.setPaintMap(l, names);
+	mw.setPaintMap(l, names,rc);
 	
 	mw.BuildFrame();
 	JMenuBar menuBar = new JMenuBar();

@@ -12,6 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import Country.RamzorColor;
 import Country.Settlement;
 import Location.*;
 
@@ -74,6 +75,27 @@ public class MainWindow {
 		this.RootPanel.setLayout(new BoxLayout(this.RootPanel,BoxLayout.Y_AXIS));
 		this.File.add(this.load);
 		this.File.add(this.statistics);
+		this.statistics.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),sett);
+				
+				sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
+				
+				sw.getStatisticWindow().getContentPane().add(sw.getMiddle(),"Center");
+				
+				sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
+
+				sw.setfilterText(sw.getName());
+				
+				
+				sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+				sw.getStatisticWindow().setSize(700,550);
+				sw.getStatisticWindow().setVisible(true);
+			}
+		});
+		
+		
 		this.File.add(this.editM);
 		this.File.add(this.exit);
 		this.Simulation.add(this.play);
@@ -98,8 +120,8 @@ public class MainWindow {
 		this.SliderPanel.add(this.slider, "South");		
 	}
 
-	public void setPaintMap(List <Location> l, List <String> n){
-		this.map= new PaintMap(l,n);
+	public void setPaintMap(List <Location> l, List <String> n, List <RamzorColor>c){
+		this.map= new PaintMap(l,n, c);
 
 		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
@@ -119,7 +141,7 @@ public class MainWindow {
 						
 						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
 
-						
+						sw.setfilterText(sw.getName());
 						
 						
 						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
