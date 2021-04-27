@@ -20,7 +20,6 @@ public class PaintMap extends JPanel {
 		this.name=n;
 	}
 	public void paint(Graphics g) {	
-
 		for (int i=0; i<this.location.size(); i++) {
 
 			g.setColor(Color.GREEN);

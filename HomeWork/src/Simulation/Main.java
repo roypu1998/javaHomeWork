@@ -6,7 +6,7 @@
 package Simulation;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.Random;
@@ -105,11 +105,13 @@ public class Main {
 	menuBar.setPreferredSize(new Dimension(120,40));
 	frame.setJMenuBar(menuBar);
 	frame.add(mw.getRootPanel());
+	frame.getContentPane().add(mw.getSliderPanel(),"South");
+	
 	
 	
 	
 	frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	frame.setSize(700,700);
+	frame.setSize(700,550);
 	frame.setVisible(true);
 	
 	

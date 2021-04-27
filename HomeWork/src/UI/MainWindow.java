@@ -22,7 +22,7 @@ public class MainWindow {
 	
 	private JPanel middlePanel;
 	
-	private JScrollPane sp;
+	private JScrollBar sp;
 	
 	private PaintMap map;
 	
@@ -55,7 +55,7 @@ public class MainWindow {
 		this.Help= new JMenu("Help");
 		this.help= new JMenuItem("Help");
 		this.load= new JMenuItem("Load");
-		this.sp= new JScrollPane();
+		this.sp= new JScrollBar();
 		this.Simulation= new JMenu("Simulation");
 		this.statistics= new JMenuItem("Statistics");
 		this.stop= new JMenuItem("Stop");
@@ -82,22 +82,32 @@ public class MainWindow {
 		this.MenuBar.add(this.Simulation);
 		this.MenuBar.add(this.Help);
 		this.RootPanel.add(this.map);
-		this.SliderPanel.add(this.slider);
-		this.RootPanel.add(this.SliderPanel);
-		
-		
+		Dimension d = this.slider.getPreferredSize();
+		this.slider.setPreferredSize(new Dimension(d.width+450,d.height+30));
+		this.SliderPanel.setBackground(Color.white);
+		slider.setValue(50);
+        slider.setMaximum(100);
+        slider.setMinorTickSpacing(5);
+        slider.setMajorTickSpacing(10);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+		this.SliderPanel.add(this.slider, "South");		
 	}
 
 	public void setPaintMap(List <Location> l, List <String> n){
-		map= new PaintMap(l,n);
-	
-		map.addMouseListener(new MouseAdapter() {
+		this.map= new PaintMap(l,n);
+		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				System.out.println("hi");
 			}
 		});
 
 	}
+	
+	public PaintMap getMap() {
+		return this.map;
+	}
+
 	
 	public JFrame getRoot() {
 		return root;
@@ -246,16 +256,4 @@ public class MainWindow {
 	}
 
 
-	//2. Optional: What happens when the frame closes?
-	//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-	//3. Create components and put them in the frame.
-	//...create emptyLabel...
-	//frame.getContentPane().add(emptyLabel, BorderLayout.CENTER);
-
-	//4. Size the frame.
-	//frame.pack();
-
-	//5. Show it.
-	//frame.setVisible(true);
 }
