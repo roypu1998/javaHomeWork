@@ -16,6 +16,8 @@ public class Settlement {
 	
 	private RamzorColor ramzorColor;
 	
+	private int countDeath=0;
+	
 	public Settlement (String name, Location location,RamzorColor ramzorColor) {
 		this.name=name;
 		this.location=location;
@@ -23,6 +25,20 @@ public class Settlement {
 		this.ramzorColor=ramzorColor;
 	}
 
+	public int getCountDeath() {
+		return this.countDeath;
+	}
+	
+	public int VaccinatedAmount() {
+		int amount=0;
+		for (Person p: this.people) {
+			if (p instanceof Vaccinated)
+				amount++;
+		}
+		
+		return amount;
+		
+	}
 	public String getName() {
 		return name;
 	}

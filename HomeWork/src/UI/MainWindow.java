@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Location.*;
+import Location.Point;
 import Population.*;
 
 import java.awt.*;
@@ -11,7 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-
+import Country.Settlement;
 import Location.*;
 
 public class MainWindow {
@@ -40,8 +41,11 @@ public class MainWindow {
 	
 	private String s;
 	
-	public MainWindow () {
+	private Settlement[] sett;
 		
+	public MainWindow (Settlement[] sett) {
+		
+		this.sett=sett;
 		this.root= new JFrame("Main Window");
 		this.RootPanel=new JPanel();
 		this.MenuBar= new JMenuBar();
@@ -96,9 +100,33 @@ public class MainWindow {
 
 	public void setPaintMap(List <Location> l, List <String> n){
 		this.map= new PaintMap(l,n);
+
 		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
-				System.out.println("hi");
+				int x=e.getX();
+				int y=e.getY();
+				for (int i=0; i<l.size(); i++) {
+					int lx=l.get(i).getPosition().getX();
+					int ly=l.get(i).getPosition().getY();
+					int lw=l.get(i).getSize().getWidth();
+					int lh=l.get(i).getSize().getHeight();
+					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
+						StatisticsWindow sw= new StatisticsWindow(l.get(i).getPosition(),sett);
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getMiddle(),"Center");
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
+
+						
+						
+						
+						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+						sw.getStatisticWindow().setSize(700,550);
+						sw.getStatisticWindow().setVisible(true);
+					}
+				}
 			}
 		});
 

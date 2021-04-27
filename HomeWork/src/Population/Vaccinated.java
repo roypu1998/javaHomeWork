@@ -11,6 +11,7 @@ public class Vaccinated extends Person {
 
 	private double coefficientProbability ;
 	
+	
 	private long vaccinationTime;
 	
 	public Vaccinated(int age,Point p,Settlement s,double coeff,long vacc){

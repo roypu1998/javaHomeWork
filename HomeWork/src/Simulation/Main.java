@@ -86,7 +86,7 @@ public class Main {
 		 */
 	
 
-	MainWindow mw= new MainWindow();
+	MainWindow mw= new MainWindow(sett);
 	JFrame frame=new JFrame();
 	frame= mw.getRoot();
 	List <Location> l= new ArrayList<>();
