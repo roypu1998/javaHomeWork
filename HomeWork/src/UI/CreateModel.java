@@ -7,14 +7,14 @@ import Country.Settlement;
 import Location.Location;
 import Population.Person;
 
-class CourseModel extends AbstractTableModel {
+class CreateModel extends AbstractTableModel {
 	
 
 	private Map data;
 	
 	private String [] names =new String[] {"Settlement Name", "Type", "Color", "Sick Precentage",
 			"Number Of Vaccinated","Number Of Death", "Residents"};
-	public CourseModel (Map data) {
+	public CreateModel (Map data) {
 		this.data=data;
 	}
 	
@@ -36,16 +36,16 @@ class CourseModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		Settlement p= this.data.at(rowIndex);
+		Settlement s= this.data.at(rowIndex);
 		switch (columnIndex) {
 		
-		case 0: return p.getName();
-		case 1: return p.getClass().getSimpleName();
-		case 2: return p.getRamzorColor();
-		case 3: return p.contagiousPercent();
-		case 4: return p.VaccinatedAmount();
-		case 5: return p.getCountDeath();
-		case 6: return p.getPeople().size();
+		case 0: return s.getName();
+		case 1: return s.getClass().getSimpleName();
+		case 2: return s.getRamzorColor();
+		case 3: return s.contagiousPercent();
+		case 4: return s.VaccinatedAmount();
+		case 5: return s.getCountDeath();
+		case 6: return s.getPeople().size();
 		
 		}
 		return null;

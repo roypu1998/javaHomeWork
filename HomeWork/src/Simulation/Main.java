@@ -49,14 +49,17 @@ public class Main {
 				sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(),
 						africanVirus);
 				
-				mapSett.getSettlements()[i].getPeople().remove(p);
+				mapSett.getSettlements()[i].getNotSickPpl().remove(p);
 				
 				mapSett.getSettlements()[i].getSickPpl().add(sc);
 			}
 		}
 		Random rand= new Random();
 		
-		int numOfIterations =0;
+		
+		
+		
+		//int numOfIterations =0;
 		
 		/*
 		 * while (numOfIterations<5) {

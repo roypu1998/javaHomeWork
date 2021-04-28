@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 
 import Country.*;
@@ -35,13 +37,14 @@ public class StatisticsWindow {
 	
 	private String [] names =new String[] {"Settlement Name", "Type", "Color", "Sick Precentage",
 			"Number Of Vaccinated","Number Of Death", "Residents"};
+	
 	private JTextField filterText;
 
 	private String name;
 	
 	private JComboBox col;
 	 
-	private CourseModel model;
+	private CreateModel model;
 	
 	private JTable table;
 	
@@ -73,7 +76,7 @@ public class StatisticsWindow {
 		
 		this.statisticWindow= new JFrame();
 		
-		model = new CourseModel(mapSett);
+		model = new CreateModel(mapSett);
 		
 		this.table = new JTable(model);
 		
@@ -131,27 +134,26 @@ public class StatisticsWindow {
 		
 		this.getAction(word);
 		
-		CourseModel cm= new CourseModel(this.mapSett);
+		CreateModel cm= new CreateModel(this.mapSett);
+		
+
 
 	}
 	
 	public void getAction(String word) {
 		this.ok.addActionListener(new ActionListener()
 		{
-			
-	        
+			   
 			public void actionPerformed(ActionEvent e) {
 				filtervalue(word);
 			}
-
 		});
 		
 	}
 
 	public void filtervalue(String filterString) {
-		TableRowSorter<CourseModel> sorter = null;
-		this.table.setRowSorter(sorter = new TableRowSorter<CourseModel>(this.model));
-		
+		TableRowSorter<CreateModel> sorter = null;
+		this.table.setRowSorter(sorter = new TableRowSorter<CreateModel>(this.model));
 		
 		try {
 			for (int i=0; i<this.names.length;i++)
@@ -160,10 +162,12 @@ public class StatisticsWindow {
 		}
 	}
 	
+
 	
 	public void setfilterText(String n) {
 		this.filterText.setText(n);
 	}
+	
 	public JPanel getHigh() {
 		return high;
 	}

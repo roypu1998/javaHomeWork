@@ -76,6 +76,14 @@ public class MainWindow {
 		this.RootPanel.setLayout(new BoxLayout(this.RootPanel,BoxLayout.Y_AXIS));
 		this.File.add(this.load);
 		this.File.add(this.statistics);
+		this.editM.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				MutationWindow mw= new MutationWindow(mapSett);
+				
+			}
+		});
+		
+		
 		this.statistics.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
@@ -144,7 +152,6 @@ public class MainWindow {
 
 						sw.setfilterText(sw.getName());
 						
-						sw.filtervalue(sw.getName());
 						
 						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 						sw.getStatisticWindow().setSize(700,550);

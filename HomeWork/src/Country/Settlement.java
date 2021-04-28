@@ -10,14 +10,6 @@ import Virus.BritishVariant;
 
 public class Settlement {
 	
-	public List<Settlement> getConnectedAreas() {
-		return connectedAreas;
-	}
-
-	public void setConnectedAreas(List<Settlement> connectedAreas) {
-		this.connectedAreas = connectedAreas;
-	}
-
 	private String name;
 	
 	Random rand= new Random();	
@@ -26,21 +18,38 @@ public class Settlement {
 	
 	private Location location;
 	
-	private List<Person> people, SickPpl;
+	private List<Person> people, notSickPpl, SickPpl;
 	
 	private RamzorColor ramzorColor;
 	
-	private List <Settlement> connectedAreas ;
+	private List <Settlement> connectedAreas;
 	
 	public Settlement (String name, Location location,RamzorColor ramzorColor) {
 		this.name=name;
 		this.location=location;
 		this.people=new ArrayList<>();
+		this.notSickPpl= new ArrayList<>();
 		this.SickPpl= new ArrayList<>();
 		this.ramzorColor=ramzorColor;
 		this.connectedAreas= new ArrayList<>();
 	}
+	
+	public List<Person> getNotSickPpl() {
+		return notSickPpl;
+	}
 
+	public void setNotSickPpl(List<Person> notSickPpl) {
+		this.notSickPpl = notSickPpl;
+	}
+
+	public List<Settlement> getConnectedAreas() {
+		return connectedAreas;
+	}
+
+	public void setConnectedAreas(List<Settlement> connectedAreas) {
+		this.connectedAreas = connectedAreas;
+	}
+	
 	public void addConnectedAreas(Settlement s) {
 		this.connectedAreas.add(s);
 	}
@@ -56,6 +65,7 @@ public class Settlement {
 	public void setSickPpl(List<Person> sickPpl) {
 		SickPpl = sickPpl;
 	}
+	
 	public int VaccinatedAmount() {
 		int amount=0;
 		for (Person p: this.people) {
@@ -106,16 +116,8 @@ public class Settlement {
 	
 	public double contagiousPercent() {
 		
-		int sickPeople = 0;
-		
-		for( int i=0; i< this.people.size(); i++) {
-			
-			if (this.people.get(i) instanceof Sick )
-				
-				sickPeople++;
-		}
-		
-		return sickPeople/this.people.size();
+		int sickPeople = this.SickPpl.size();
+		return (double)sickPeople/this.people.size();
 	}
 	
 	public Point randomLocation() {
@@ -138,9 +140,16 @@ public class Settlement {
 	
 	public boolean addPerson(Person p) {
 		
+		if(p instanceof Sick)
+			
+			this.getSickPpl().add(p);
+		else
+			
+			this.getNotSickPpl().add(p);
+		
 		this.getPeople().add(p);
 		
-		return true;
+		return true;	
 	}
 	
 
@@ -164,7 +173,7 @@ public class Settlement {
 				
 			sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(), new BritishVariant() );
 				
-			this.getPeople().remove(p);
+			this.getNotSickPpl().remove(p);
 				
 			this.getSickPpl().add(sc);
 			
@@ -199,8 +208,14 @@ public class Settlement {
 			
 			p.getSettlement().getPeople().remove(p);
 			
+			if(p instanceof Sick) 
+				s.SickPpl.add(p);
+			
+			else
+				s.notSickPpl.add(p);
+			
 			s.people.add(p);
-				
+			
 			return true;
 
 		}
