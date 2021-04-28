@@ -30,28 +30,28 @@ public class Main {
 		
 		IVirus africanVirus=new SouthAfricanVariant();
 		
-		Settlement[] sett= simulationfile.getSett().getSettlements();
+		Map mapSett= simulationfile.getSett();
 		
 		int numOfPpl, sickPpl;
 		
 		Sick sc;
 		
-		for (int i=0; i<sett.length;i++) {
+		for (int i=0; i<mapSett.Size();i++) {
 			
-			numOfPpl=sett[i].getPeople().size();
+			numOfPpl=mapSett.getSettlements()[i].getPeople().size();
 			
 			sickPpl=(int) (numOfPpl*0.01);
 			
-			for (int j=0; j<sett[i].getPeople().size();j+=9) {
+			for (int j=0; j<mapSett.getSettlements()[i].getPeople().size();j+=9) {
 				
-				Person p=sett[i].getPeople().get(j);
+				Person p=mapSett.getSettlements()[i].getPeople().get(j);
 				
 				sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(),
 						africanVirus);
 				
-				sett[i].getPeople().remove(p);
+				mapSett.getSettlements()[i].getPeople().remove(p);
 				
-				sett[i].addPerson(sc);
+				mapSett.getSettlements()[i].getSickPpl().add(sc);
 			}
 		}
 		Random rand= new Random();
@@ -86,19 +86,15 @@ public class Main {
 		 */
 	
 
-	MainWindow mw= new MainWindow(sett);
+	MainWindow mw= new MainWindow(mapSett);
 	JFrame frame=new JFrame();
 	frame= mw.getRoot();
-	List <Location> l= new ArrayList<>();
-	List <String> names= new ArrayList<>();
-	List <RamzorColor> rc= new ArrayList<>();
-	for(int i=0; i<sett.length;i++) {
-		l.add(sett[i].getLocation());
-		names.add(sett[i].getName());
-		rc.add(sett[i].getRamzorColor());
+	List<Settlement> settlement= new ArrayList<>();
+	for(int i=0; i<mapSett.Size();i++) {
+		settlement.add(mapSett.getSettlements()[i]);
 	}
 	
-	mw.setPaintMap(l, names,rc);
+	mw.setPaintMap(settlement);
 	
 	mw.BuildFrame();
 	JMenuBar menuBar = new JMenuBar();

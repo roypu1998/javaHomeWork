@@ -13,6 +13,7 @@ import Location.Point;
 
 public class StatisticsWindow {
 
+
 	public JTextField getFilterText() {
 		return filterText;
 	}
@@ -21,33 +22,32 @@ public class StatisticsWindow {
 	public void setFilterText(JTextField filterText) {
 		this.filterText = filterText;
 	}
-
+	
 	private JFrame statisticWindow;
 	
 	private JPanel high, middle, low;
 	
 	private JButton save, addSick ,Vaccinate, ok;
 	
-	private Settlement[] sett;
+	private Map mapSett;
 	
 	private JLabel label;
 	
+	private String [] names =new String[] {"Settlement Name", "Type", "Color", "Sick Precentage",
+			"Number Of Vaccinated","Number Of Death", "Residents"};
 	private JTextField filterText;
 
 	private String name;
 	
-	private String [] names =new String[] {"Settlement Name", "Type", "Color", "Sick Precentage",
-		"Number Of Vaccinated","Number Of Death", "Residents"};
-	
 	private JComboBox col;
+	 
+	private CourseModel model;
 	
 	private JTable table;
 	
 	private Point p;
-	
-	Object [][] data;
-			
-	public StatisticsWindow(Point p,Settlement[] sett)	{
+				
+	public StatisticsWindow(Point p,Map map)	{
 		
 		this.addSick= new JButton("Add Sick");
 		
@@ -67,24 +67,24 @@ public class StatisticsWindow {
 		
 		this.ok= new JButton("Ok");
 		
-		this.sett=sett;
-		
-		this.data=new Object[this.names.length][this.sett.length];
-		
-		this.fillData();
-		
+		this.mapSett=map;
+						
 		this.col= new JComboBox(this.names);
-		
-		this.table= new JTable(this.data,this.names);
-		
-		JScrollPane scrollPane = new JScrollPane(this.table);
 		
 		this.statisticWindow= new JFrame();
 		
-		this.table.setSize(this.middle.getWidth(), this.middle.getHeight());
+		model = new CourseModel(mapSett);
 		
-		this.middle.add(scrollPane);
+		this.table = new JTable(model);
 		
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		
+		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		
+		table.setFillsViewportHeight(true);
+		
+		this.middle.add(new JScrollPane(table));
+
 		this.p=p;
 		
 		this.ok.setBorder(new EmptyBorder(10,30,10,30));
@@ -130,6 +130,8 @@ public class StatisticsWindow {
 		String word=this.filterText.getText();
 		
 		this.getAction(word);
+		
+		CourseModel cm= new CourseModel(this.mapSett);
 
 	}
 	
@@ -146,47 +148,16 @@ public class StatisticsWindow {
 		
 	}
 
-	private void filtervalue(String filterString) {
-		TableModel model = new DefaultTableModel(this.data, this.names) {
-		      public Class getColumnClass(int column) {
-		        Class returnValue;
-		        if ((column >= 0) && (column < getColumnCount())) {
-		          returnValue = getValueAt(0, column).getClass();
-		        } else {
-		          returnValue = Object.class;
-		        }
-		        return returnValue;
-		      }
-		    };
-		    this.table.setModel(model);
-		    TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(model);
-		    String text = filterText.getText();
-	        if (text.length() == 0) {
-	          sorter.setRowFilter(null);
-	        } else {
-	          sorter.setRowFilter(RowFilter.regexFilter(text));
-	        }
-	}
-	
-	
-	public void fillData(){
-		String type;
-		int len= this.sett.length;
-
-		for (int i=0; i<len; i++) {
-			if (sett[i] instanceof City)
-				type="City";
-			else if (sett[i] instanceof Kibbutz)
-				type="Kibbutz";
-			else 
-				type="Moshav";
-			Object []temp= {sett[i].getName(), type, sett[i].getRamzorColor(),
-					sett[i].contagiousPercent(),sett[i].VaccinatedAmount(),
-					sett[i].getCountDeath(),sett[i].getPeople().size()};
-			this.data[i]=temp;
+	public void filtervalue(String filterString) {
+		TableRowSorter<CourseModel> sorter = null;
+		this.table.setRowSorter(sorter = new TableRowSorter<CourseModel>(this.model));
+		
+		
+		try {
+			for (int i=0; i<this.names.length;i++)
+				sorter.setRowFilter(RowFilter.regexFilter(this.filterText.getText().trim()));
+		} catch (java.util.regex.PatternSyntaxException e) {		
 		}
-		
-		
 	}
 	
 	
@@ -232,7 +203,7 @@ public class StatisticsWindow {
 	{
 		String name=null;
 		int x=p.getX(), y=p.getY();
-		for (Settlement loc:this.sett) {
+		for (Settlement loc:this.mapSett.getSettlements()) {
 			int lx=loc.getLocation().getPosition().getX();
 			int ly=loc.getLocation().getPosition().getY();
 			int lw=loc.getLocation().getSize().getWidth();

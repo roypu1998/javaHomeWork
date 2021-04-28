@@ -27,9 +27,10 @@ public class Moshav extends Settlement {
 			return false;
 	}
 	
-	public String toString() {
-		return "Moshav "+super.toString();
-	  
-	 }
+	/*
+	 * public String toString() { return "Moshav "+super.toString();
+	 * 
+	 * }
+	 */
 	 
 }

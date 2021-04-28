@@ -8,50 +8,50 @@ import java.awt.*;
 import javax.swing.*;
 
 import Country.RamzorColor;
+import Country.Settlement;
 import Location.*;
 import Location.Point;
 
 public class PaintMap extends JPanel {
 	
 	
-	private List <Location> location;
+	private List <Settlement> settlement;
 	
-	private List <String> name;
+	public PaintMap(List <Settlement> settlement) {
+		
+		this.settlement=settlement;
+	}
 	
-	private List <RamzorColor> rc;
-	
-	public PaintMap(List <Location>l,List<String> n, List<RamzorColor> rc) {
-		this.location=l;
-		this.name=n;
-		this.rc=rc;
+	public Point middlePoint(Location l) {
+		int x,y;
+		x=l.getPosition().getX()+(l.getSize().getWidth()/2);
+		y=l.getPosition().getY()+(l.getSize().getHeight()/2);
+		return new Point(x,y);
 	}
 	public void paint(Graphics g) {	
-				Point[] loc =new Point[this.location.size()]; 
-		int x,y;
-		for (int i=0; i<this.location.size();i++) {
-			x=this.location.get(i).getPosition().getX()+(this.location.get(i).getSize().getWidth()/2);
-			y=this.location.get(i).getPosition().getY()+(this.location.get(i).getSize().getHeight()/2);
-			loc[i]=new Point(x,y);
-		}
+		Point p1,p2; 
+		
 		
 		Graphics g2=(Graphics) g;
 		
-					
-		for (int i=0; i<this.location.size();i++) {
-			for (int j=0;j<this.location.size();j++) {
-				if (i!=j)
-					g2.drawLine(loc[i].getX(), loc[i].getY(), loc[j].getX(), loc[j].getY());
+		for (int i=0; i<this.settlement.size();i++) {
+			for (int j=0;j<this.settlement.get(i).getConnectedAreas().size();j++) {
+					p1=this.middlePoint(this.settlement.get(i).getLocation());
+					p2=this.middlePoint(this.settlement.get(i).getConnectedAreas().get(j).getLocation());
+					g2.drawLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
 				}
 			}
 		
-		for (int i=0; i<this.location.size(); i++) {
-			g.setColor(this.rc.get(i).getColor());
-			g.fillRect(location.get(i).getPosition().getX(),location.get(i).getPosition().getY(),
-			    	location.get(i).getSize().getWidth(), location.get(i).getSize().getHeight());
+		for (int i=0; i<this.settlement.size(); i++) {
+			g.setColor(this.settlement.get(i).getRamzorColor().getColor());
+			g.fillRect(this.settlement.get(i).getLocation().getPosition().getX(),this.settlement.get(i).getLocation().getPosition().getY(),
+					this.settlement.get(i).getLocation().getSize().getWidth(),this.settlement.get(i).getLocation().getSize().getHeight());
 			g2.setColor(Color.black);
 			
-			g2.drawString(this.name.get(i),location.get(i).getPosition().getX()+(location.get(i).getSize().getWidth()/2)
-					,location.get(i).getPosition().getY()+(location.get(i).getSize().getHeight()/2) );
+			g2.drawString(this.settlement.get(i).getName(),this.settlement.get(i).getLocation().getPosition().getX()
+					+(this.settlement.get(i).getLocation().getSize().getWidth()/2)
+					,this.settlement.get(i).getLocation().getPosition().getY()
+					+(this.settlement.get(i).getLocation().getSize().getHeight()/2) );
 			
 		}
 		

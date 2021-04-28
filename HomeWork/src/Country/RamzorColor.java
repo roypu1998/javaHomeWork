@@ -23,7 +23,7 @@ public enum RamzorColor {
 	
 	}
 	
-	public void probTrans() {
+	public double probTrans() {
 		if (this.color.equals(Color.GREEN))
 			this.transferProbability=1;
 		else if (this.color.equals(Color.YELLOW))
@@ -31,7 +31,8 @@ public enum RamzorColor {
 		else if (this.color.equals(Color.ORANGE))
 			this.transferProbability=0.6; 
 		else if (this.color.equals(Color.RED))
-			this.transferProbability=0.4; 
+			this.transferProbability=0.4;
+		return this.transferProbability;
 	}
 	
 	public Color getColor() {

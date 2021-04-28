@@ -12,6 +12,7 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import Country.Map;
 import Country.RamzorColor;
 import Country.Settlement;
 import Location.*;
@@ -42,11 +43,11 @@ public class MainWindow {
 	
 	private String s;
 	
-	private Settlement[] sett;
+	private Map mapSett;
 		
-	public MainWindow (Settlement[] sett) {
+	public MainWindow (Map mapSett) {
 		
-		this.sett=sett;
+		this.mapSett=mapSett;
 		this.root= new JFrame("Main Window");
 		this.RootPanel=new JPanel();
 		this.MenuBar= new JMenuBar();
@@ -78,7 +79,7 @@ public class MainWindow {
 		this.statistics.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),sett);
+				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),mapSett);
 				
 				sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 				
@@ -120,20 +121,20 @@ public class MainWindow {
 		this.SliderPanel.add(this.slider, "South");		
 	}
 
-	public void setPaintMap(List <Location> l, List <String> n, List <RamzorColor>c){
-		this.map= new PaintMap(l,n, c);
+	public void setPaintMap(List <Settlement> settlement){
+		this.map= new PaintMap(settlement);
 
 		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int x=e.getX();
 				int y=e.getY();
-				for (int i=0; i<l.size(); i++) {
-					int lx=l.get(i).getPosition().getX();
-					int ly=l.get(i).getPosition().getY();
-					int lw=l.get(i).getSize().getWidth();
-					int lh=l.get(i).getSize().getHeight();
+				for (int i=0; i<settlement.size(); i++) {
+					int lx=settlement.get(i).getLocation().getPosition().getX();
+					int ly=settlement.get(i).getLocation().getPosition().getY();
+					int lw=settlement.get(i).getLocation().getSize().getWidth();
+					int lh=settlement.get(i).getLocation().getSize().getHeight();
 					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
-						StatisticsWindow sw= new StatisticsWindow(l.get(i).getPosition(),sett);
+						StatisticsWindow sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett);
 						
 						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 						
@@ -143,6 +144,7 @@ public class MainWindow {
 
 						sw.setfilterText(sw.getName());
 						
+						sw.filtervalue(sw.getName());
 						
 						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 						sw.getStatisticWindow().setSize(700,550);

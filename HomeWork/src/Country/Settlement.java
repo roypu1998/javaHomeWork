@@ -5,30 +5,57 @@ import java.util.Random;
 
 import Location.*;
 import Population.*;
+import Simulation.Clock;
+import Virus.BritishVariant;
 
 public class Settlement {
 	
+	public List<Settlement> getConnectedAreas() {
+		return connectedAreas;
+	}
+
+	public void setConnectedAreas(List<Settlement> connectedAreas) {
+		this.connectedAreas = connectedAreas;
+	}
+
 	private String name;
+	
+	Random rand= new Random();	
+	
+	private int vacineNum=0, countDeath=0,maxPpl;
 	
 	private Location location;
 	
-	private List<Person> people;
+	private List<Person> people, SickPpl;
 	
 	private RamzorColor ramzorColor;
 	
-	private int countDeath=0;
+	private List <Settlement> connectedAreas ;
 	
 	public Settlement (String name, Location location,RamzorColor ramzorColor) {
 		this.name=name;
 		this.location=location;
 		this.people=new ArrayList<>();
+		this.SickPpl= new ArrayList<>();
 		this.ramzorColor=ramzorColor;
+		this.connectedAreas= new ArrayList<>();
 	}
 
+	public void addConnectedAreas(Settlement s) {
+		this.connectedAreas.add(s);
+	}
+	
 	public int getCountDeath() {
 		return this.countDeath;
 	}
 	
+	public List<Person> getSickPpl() {
+		return SickPpl;
+	}
+
+	public void setSickPpl(List<Person> sickPpl) {
+		SickPpl = sickPpl;
+	}
 	public int VaccinatedAmount() {
 		int amount=0;
 		for (Person p: this.people) {
@@ -116,11 +143,69 @@ public class Settlement {
 		return true;
 	}
 	
+
+	public boolean addSickPerson() {
+		
+		Sick sc;
+		
+		int numOfPpl, sickPpl;
+			
+		numOfPpl=this.getPeople().size();
+			
+		sickPpl=(int) (numOfPpl*0.001);
+						
+		int x ;
+		
+		for (int i=0; i<sickPpl;i++) {
+			
+			x= rand.nextInt(numOfPpl);
+				
+			Person p=this.getPeople().get(x);
+				
+			sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(), new BritishVariant() );
+				
+			this.getPeople().remove(p);
+				
+			this.getSickPpl().add(sc);
+			
+		}
+		
+		return true;	
+	}
+	
+	public int getVacineNum() {
+		return vacineNum;
+	}
+
+	public void setVacineNum(int vacineNum) {
+		this.vacineNum = vacineNum;
+	}
+
+	public void setCountDeath(int countDeath) {
+		this.countDeath = countDeath;
+	}
+
 	public boolean transferPerson(Person p, Settlement s) {
+				
+		double prob= this.ramzorColor.probTrans()*s.ramzorColor.probTrans();
 		
-		s.people.add(p);
+		double x= rand.nextDouble();
 		
-		return true;
+		if (this.getPeople().size()+1>this.maxPpl)
+
+			return false;
+		
+		if (prob>x) {
+			
+			p.getSettlement().getPeople().remove(p);
+			
+			s.people.add(p);
+				
+			return true;
+
+		}
+		else
+			return false;
 	}
 	
 	public void printPeople() {
@@ -128,10 +213,15 @@ public class Settlement {
 		System.out.println(this.getPeople());
 	}
 	
-	
-	  public String toString() {
-		  return "Settlement {name= "
-	  +this.name+" location= "+this.location.toString()
-	  +" ramzorColor= "+this.ramzorColor +" people= "+this.people.toString()+"}";
-	  }
+		public void setMax() {
+		this.maxPpl=(int) (this.getPeople().size()*1.3);
+	}
+
+	/*
+	 * public String toString() { return "Settlement {name= "
+	 * +this.name+" location= "+this.location.toString()
+	 * +" ramzorColor= "+this.ramzorColor +" people= "+this.people.toString()+"}"; }
+	 */
+
+
 }

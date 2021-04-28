@@ -5,3 +5,12 @@ Kibbutz;Ayalot;140;170;90;90;50
 Kibbutz;Beit-Kama;400;130;100;80;75
 Moshav;Matzliah;550;200;100;70;125
 City;Tel-Aviv;300;250;150;120;2000
+#;Ashdod;Ayalot
+#;Matzliah;Tel-Aviv
+#;Beit-Kama;Gevim
+#;Gevim;Ayalot
+#;Beer-Sheva;Ayalot
+#;Ayalot;Tel-Aviv
+#;Tel-Aviv;Beit-Kama
+#;Ashdod;Tel-Aviv
+#;Beer-Sheva;Matzliah
