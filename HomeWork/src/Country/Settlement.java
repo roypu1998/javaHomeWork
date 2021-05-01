@@ -7,6 +7,9 @@ import Location.*;
 import Population.*;
 import Simulation.Clock;
 import Virus.BritishVariant;
+import Virus.ChineseVariant;
+import Virus.IVirus;
+import Virus.SouthAfricanVariant;
 
 public class Settlement {
 	
@@ -38,6 +41,17 @@ public class Settlement {
 		return notSickPpl;
 	}
 
+	public IVirus getRandVirus() {
+		String [] virusNames={"BritishVariant", "ChineseVariant", "SouthAfricaVariant"};
+		int random= rand.nextInt(3);
+		switch (random){
+		case 0: return new BritishVariant();
+		case 1: return new ChineseVariant();
+		case 2: return new SouthAfricanVariant();
+		}
+		return null;
+		
+	}
 	public void setNotSickPpl(List<Person> notSickPpl) {
 		this.notSickPpl = notSickPpl;
 	}

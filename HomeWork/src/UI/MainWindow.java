@@ -1,11 +1,14 @@
 package UI;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import Location.*;
 import Location.Point;
 import Population.*;
+import Simulation.Main;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,6 +18,7 @@ import javax.swing.border.EmptyBorder;
 import Country.Map;
 import Country.RamzorColor;
 import Country.Settlement;
+import IO.SimulationFile;
 import Location.*;
 
 public class MainWindow {
@@ -29,6 +33,8 @@ public class MainWindow {
 	
 	private PaintMap map;
 	
+	private JOptionPane option;
+	
 	private JSplitPane split;
 	
 	private JSlider slider;
@@ -40,13 +46,15 @@ public class MainWindow {
 	private JMenuItem load, statistics, editM, exit, play, pause, stop, help, stpd, about;
 	
 	private List<Location> location;
-	
+		
 	private String s;
+	
+	private JFileChooser chooser;
 	
 	private Map mapSett;
 		
 	public MainWindow (Map mapSett) {
-		
+		this.chooser= new JFileChooser("C:\\Users\\reina\\OneDrive\\Desktop\\HomeWork2021\\javaFiles");
 		this.mapSett=mapSett;
 		this.root= new JFrame("Main Window");
 		this.RootPanel=new JPanel();
@@ -79,10 +87,61 @@ public class MainWindow {
 		this.editM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MutationWindow mw= new MutationWindow(mapSett);
+
+			}
+		});
+		
+		this.load.addActionListener(new ActionListener()
+				{public void actionPerformed(ActionEvent e) {
+				chooser.showOpenDialog(new JFrame("Choose Map"));
+				File file= chooser.getSelectedFile();
+				String nameFile= file.getPath();
+				root.dispose();
+				Main main = new Main();
+				SimulationFile sf= new SimulationFile(nameFile,mapSett);
+				mapSett=main.newMapLoad(sf);
+				main.OpenFrame(mapSett);
+				}
+				});
+		
+		
+		this.exit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		this.help.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				option.showMessageDialog(root,
+					    "To load a new map click on 'file-load' and choose your file\n"
+					    +"To get a table with the information about your locations click on 'file-statistics'"
+					    +"\nTo edit mutation click on 'file-editMutation"
+					    +"\nTo exit click on 'file-exit"+
+					    "\nTo get information about the programmers click on 'Help-About\n"
+					    + "To pause the simulation click on 'simulation-pause\n"
+					    + "To restart the simulation click on'simulation-play'\n"
+					    + "To Stop the simulation click on'simulation-stop'\n"
+					    + "To set ticks of click click on 'simulation-set ticks per day'\n"
+					    + "To add a sick person to a specific settlement click on the settlement- add sick\n"
+					    + "To save the current state of the settlements click on 'file-statistics-save'\n"
+					    + "To add a number of vacines to a settlement click on 'file-statistics-choose a settlement-vaccinate",
+					    "Help center",
+					    JOptionPane.INFORMATION_MESSAGE);
 				
 			}
 		});
 		
+		this.about.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				option.showMessageDialog(root,
+					    "Names: Erelle Boubli and Roi Putterman\nID: 324460443 and 314919010"
+					    + "\nDate: 29/04/2021",
+					    "About",
+					    JOptionPane.INFORMATION_MESSAGE);
+				
+			}
+		});
 		
 		this.statistics.addActionListener(new ActionListener()
 		{
@@ -96,7 +155,7 @@ public class MainWindow {
 				sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
 
 				sw.setfilterText(sw.getName());
-				
+
 				
 				sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 				sw.getStatisticWindow().setSize(700,550);
@@ -151,7 +210,8 @@ public class MainWindow {
 						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
 
 						sw.setfilterText(sw.getName());
-						
+
+					
 						
 						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 						sw.getStatisticWindow().setSize(700,550);

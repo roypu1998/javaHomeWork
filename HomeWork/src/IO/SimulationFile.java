@@ -12,17 +12,25 @@ import Country.*;
 import Location.*;
 import Population.*;
 public class SimulationFile {
+	
 
 	private Map sett;
+	
 	Random rand=new Random();
+	
+	private String nameFile;
+	
+	public SimulationFile(String nameFile,Map sett) {
+		
+		this.nameFile=nameFile;
+		this.sett= sett;
+	}
 
 	public void ReadFile() {
 		Random ran= new Random();
 		
 		try {
-	        BufferedReader inFile = new BufferedReader(new FileReader("src/homework_IO.txt"));
-	       
-	        this.sett=new Map();
+	        BufferedReader inFile = new BufferedReader(new FileReader(this.nameFile));
 	        
 	        String str;
 	        City city;
@@ -36,9 +44,9 @@ public class SimulationFile {
 	        }
 	        
 	        
-	        BufferedReader inFile2 = new BufferedReader(new FileReader("src/homework_IO.txt"));
+	        BufferedReader inFile2 = new BufferedReader(new FileReader(this.nameFile));
 	        
-	        BufferedReader inFile3 = new BufferedReader(new FileReader("src/homework_IO.txt"));
+	        BufferedReader inFile3 = new BufferedReader(new FileReader(this.nameFile));
 
 	        this.sett.setSize(lines-1);
 	        
