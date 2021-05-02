@@ -155,12 +155,10 @@ public class Settlement {
 	public boolean addPerson(Person p) {
 		
 		if(p instanceof Sick)
-			
 			this.getSickPpl().add(p);
-		else
-			
+		else {
 			this.getNotSickPpl().add(p);
-		
+		}
 		this.getPeople().add(p);
 		
 		return true;	
@@ -201,7 +199,7 @@ public class Settlement {
 	}
 
 	public void setVacineNum(int vacineNum) {
-		this.vacineNum = vacineNum;
+		this.vacineNum += vacineNum;
 	}
 
 	public void setCountDeath(int countDeath) {

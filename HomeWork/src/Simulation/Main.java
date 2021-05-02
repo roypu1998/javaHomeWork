@@ -101,7 +101,7 @@ public class Main {
 		Map mapSett = new Map();
 	
 		SimulationFile simulationfile=new SimulationFile("src/homework_IO.txt",mapSett);
-		
+				
 		mapSett= newMapLoad(simulationfile);
 		
 		Random rand= new Random();

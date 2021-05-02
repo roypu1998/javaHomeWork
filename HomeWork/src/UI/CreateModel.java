@@ -43,7 +43,7 @@ class CreateModel extends AbstractTableModel {
 		case 1: return s.getClass().getSimpleName();
 		case 2: return s.getRamzorColor();
 		case 3: return s.contagiousPercent();
-		case 4: return s.VaccinatedAmount();
+		case 4: return s.getVacineNum();
 		case 5: return s.getCountDeath();
 		case 6: return s.getPeople().size();
 		

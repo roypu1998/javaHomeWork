@@ -83,7 +83,6 @@ public class SimulationFile {
 		        			set=this.getSett().getSettlements()[index];
 		        			ppl=new Healthy(age, randPoint,set);
 			        		set.addPerson(ppl);
-			        		set.getNotSickPpl().add(ppl);
 		        		}
 		    	        index++;
 		        		
@@ -98,8 +97,6 @@ public class SimulationFile {
 		        			set=this.getSett().getSettlements()[index];
 		        			ppl=new Healthy(age, randPoint,set);
 			        		set.addPerson(ppl);
-			        		set.getNotSickPpl().add(ppl);
-
 		        		}
 		        		index++;
 		        	}
@@ -113,8 +110,6 @@ public class SimulationFile {
 		        			set=this.getSett().getSettlements()[index];
 		        			ppl=new Healthy(age, randPoint,set);
 			        		set.addPerson(ppl);
-			        		set.getNotSickPpl().add(ppl);
-
 		        		}
 		        		index++;
 	
