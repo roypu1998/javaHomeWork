@@ -8,6 +8,7 @@ import java.util.List;
 import Location.*;
 import Location.Point;
 import Population.*;
+import Simulation.Clock;
 import Simulation.Main;
 
 import java.awt.*;
@@ -53,6 +54,8 @@ public class MainWindow {
 	
 	private Map mapSett;
 		
+	private JDialog dialog;
+	
 	public MainWindow (Map mapSett) {
 		this.chooser= new JFileChooser("C:\\Users\\reina\\OneDrive\\Desktop\\HomeWork2021\\javaFiles");
 		this.mapSett=mapSett;
@@ -90,6 +93,28 @@ public class MainWindow {
 
 			}
 		});
+
+		this.stpd.addActionListener(new ActionListener()
+		{public void actionPerformed(ActionEvent e) {
+			dialog= new JDialog(new JFrame("ticks per day"), "tick amount");
+			dialog.setLayout(new GridLayout(2,1));
+			JSpinner spinner= new JSpinner();
+			JButton tickB= new JButton("ok");
+			dialog.add(spinner);
+			dialog.add(tickB);
+			Clock clock= new Clock();
+			tickB.addActionListener(new ActionListener()
+			{public void actionPerformed(ActionEvent e)
+		     {
+				clock.setTicksPerDay((int)spinner.getValue());
+				dialog.dispose();
+		     }
+			});
+			dialog.setSize(150, 150);
+	        dialog.setVisible(true);
+		}
+		});
+		
 		
 		this.load.addActionListener(new ActionListener()
 				{public void actionPerformed(ActionEvent e) {
@@ -113,6 +138,7 @@ public class MainWindow {
 		
 		this.help.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ImageIcon icon = new ImageIcon("helpCenterPic.jpeg");
 				option.showMessageDialog(root,
 					    "To load a new map click on 'file-load' and choose your file\n"
 					    +"To get a table with the information about your locations click on 'file-statistics'"
@@ -127,7 +153,9 @@ public class MainWindow {
 					    + "To save the current state of the settlements click on 'file-statistics-save'\n"
 					    + "To add a number of vacines to a settlement click on 'file-statistics-choose a settlement-vaccinate",
 					    "Help center",
-					    JOptionPane.INFORMATION_MESSAGE);
+					    JOptionPane.INFORMATION_MESSAGE,icon);
+				
+       
 				
 			}
 		});

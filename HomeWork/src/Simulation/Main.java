@@ -108,6 +108,9 @@ public class Main {
 		
 		OpenFrame(mapSett);
 		
+		Clock c= new Clock();
+		
+		System.out.println(c.now());
 
 		
 		//int numOfIterations =0;

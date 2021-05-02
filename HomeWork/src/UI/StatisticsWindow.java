@@ -165,7 +165,6 @@ public class StatisticsWindow {
 	
 	public void createTable() {
 		
-		
 		 model = new CreateModel(mapSett);
 		  
 		 this.table = new JTable(model);
