@@ -3,6 +3,8 @@ import java.util.Random;
 
 import Location.Point;
 import Population.*;
+import Simulation.Clock;
+
 import java.math.*;
 
 
@@ -56,6 +58,8 @@ public class ChineseVariant implements IVirus {
 
 	
 	public boolean tryToKill(Sick s) {
+		long t=new Clock().calcTime(s.getContagiousTime());
+
 		double probability;
 				
 		if(s.getAge()<18)
@@ -67,7 +71,7 @@ public class ChineseVariant implements IVirus {
 		else
 			probability=0.10;
 		
-		double die=Math.max(0, probability-0.01*probability*(Math.pow(s.getContagiousTime()-15,2)));
+		double die=Math.max(0, probability-0.01*probability*(Math.pow(t-15,2)));
 		
 		double rnd=rand.nextDouble();
 		

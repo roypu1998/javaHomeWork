@@ -3,6 +3,7 @@ import java.util.Random;
 
 import Location.Point;
 import Population.*;
+import Simulation.Clock;
 import Country.*;
 
 public class SouthAfricanVariant implements IVirus{
@@ -32,16 +33,17 @@ public class SouthAfricanVariant implements IVirus{
 		return contagionprobability*p.contagionProbability();
 	}
 		
-	public boolean tryToContagion(Person p1, Person p2) {	
+	public boolean tryToContagion(Sick p1, Person p2) {	
 		
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
-		
+		Clock c= new Clock();
+		long time=c.calcTime(p1.getContagiousTime());
 		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
 						
-			if( percentage < rnd ) { 
+			if( percentage < rnd && time>=5) { 
 				
 				return true;
 			}
@@ -53,6 +55,8 @@ public class SouthAfricanVariant implements IVirus{
 	
 	public boolean tryToKill(Sick s) {
 		
+		long t=new Clock().calcTime(s.getContagiousTime());
+				
 		double probability;
 		
 		
@@ -62,7 +66,7 @@ public class SouthAfricanVariant implements IVirus{
 		else
 			probability=0.08;
 		
-		double die=Math.max(0, probability-0.01*probability*(Math.pow(s.getContagiousTime()-15,2)));
+		double die=Math.max(0, probability-0.01*probability*(Math.pow(t-15,2)));
 		
 		double rnd =rand.nextDouble();
 		

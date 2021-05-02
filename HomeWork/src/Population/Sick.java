@@ -9,8 +9,6 @@ public class Sick extends Person{
 	
 	private IVirus virus;
 	
-	
-	
 	public Sick(int age,Point p,Settlement s,long con,IVirus vir){
 		
 		super(age,p,s);
@@ -20,7 +18,7 @@ public class Sick extends Person{
 	}
 	
 	public long getContagiousTime() {
-		contagiousTime=Clock.now()-this.contagiousTime;
+		this.contagiousTime=Clock.now();
 		return contagiousTime;
 	}
 

@@ -11,25 +11,19 @@ public class Vaccinated extends Person {
 
 	private double coefficientProbability ;
 	
-	
 	private long vaccinationTime;
 	
 	public Vaccinated(int age,Point p,Settlement s,double coeff,long vacc){
 		
 		super(age,p,s);
 		this.coefficientProbability=coeff;
-		this.vaccinationTime=vacc;
+		this.vaccinationTime= new Clock().now();
 	}
 	
-	public long getVaccinationTime() {
-		Clock c=new Clock();
-		
-		return (c.now()-this.vaccinationTime)/24;
+	public long getVaccinationTime() {		
+		return this.vaccinationTime;
 	}
 
-	public void setVaccinationTime(long vaccinationTime) {
-		this.vaccinationTime = vaccinationTime;
-	}
 
 	public double getCoefficientProbability() {
 		return coefficientProbability;
@@ -37,11 +31,13 @@ public class Vaccinated extends Person {
 	
 	public void setCoefficientProbability() {
 		
-		if( this.vaccinationTime < 21L) 
+		long t=new Clock().calcTime(this.vaccinationTime);
+		
+		if( t < 21L) 
 			
-			this.coefficientProbability=Math.min(1, 0.56 + 0.15*(Math.sqrt(21-this.vaccinationTime)));
+			this.coefficientProbability=Math.min(1, 0.56 + 0.15*(Math.sqrt(21L-t)));
 		else
-			this.coefficientProbability=Math.max(0.5, 1.05/(this.vaccinationTime-14));
+			this.coefficientProbability=Math.max(0.5, 1.05/(t-14L));
 		
 	}
 

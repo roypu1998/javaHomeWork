@@ -8,13 +8,20 @@ public class Clock {
 	
 	private static long clock;
 	
-	private static long ticksPerDay=1;
+	private static long ticksPerDay=1L;
 	
 	public static long now() {
 		
 		long time = new Date().getTime();
+		
 		clock=time;
+		
 		return time;
+	}
+	
+	public long calcTime(long time) {
+		
+		return (long) Math.ceil((this.now()-time)/this.ticksPerDay);
 	}
 	
 	public static void nextTick() {
