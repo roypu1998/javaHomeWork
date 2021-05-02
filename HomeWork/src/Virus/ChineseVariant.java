@@ -40,14 +40,15 @@ public class ChineseVariant implements IVirus {
 	
 	public boolean tryToContagion(Person p1, Person p2) {
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
-		
+		Clock c= new Clock();
+		long time=c.calcTime( ((Sick) p1).getContagiousTime());
 		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
 			
 			
-			if( percentage < rnd ) { 
+			if( percentage < rnd && time>=5) { 
 				
 				return true;
 			}

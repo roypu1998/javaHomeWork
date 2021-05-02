@@ -32,12 +32,14 @@ public class SouthAfricanVariant implements IVirus{
 		
 		return contagionprobability*p.contagionProbability();
 	}
+	
+	@Override
 		
-	public boolean tryToContagion(Sick p1, Person p2) {	
+	public boolean tryToContagion(Person p1, Person p2) {	
 		
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
 		Clock c= new Clock();
-		long time=c.calcTime(p1.getContagiousTime());
+		long time=c.calcTime( ((Sick) p1).getContagiousTime());
 		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
@@ -78,6 +80,7 @@ public class SouthAfricanVariant implements IVirus{
 		return false;
 
 	}
+
 
 	/*
 	 * public String toString() { return "SouthAfricanVariant"; }
