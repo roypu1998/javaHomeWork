@@ -91,6 +91,69 @@ public class MainWindow {
 		this.RootPanel.setLayout(new BoxLayout(this.RootPanel,BoxLayout.Y_AXIS));
 		this.File.add(this.load);
 		this.File.add(this.statistics);
+		this.File.add(this.editM);
+		this.File.add(this.exit);
+		this.Simulation.add(this.play);
+		this.Simulation.add(this.pause);
+		this.Simulation.add(this.stop);
+		this.Simulation.add(this.stpd);
+		this.Help.add(this.help);
+		this.Help.add(this.about);
+		this.MenuBar.add(this.File);
+		this.MenuBar.add(this.Simulation);
+		this.MenuBar.add(this.Help);
+		if (Main.num>0)
+			this.RootPanel.add(this.map);
+		else
+			this.RootPanel.add(new JLabel ("load a new map to get started! "), "Center");
+		Dimension d = this.slider.getPreferredSize();
+		this.slider.setPreferredSize(new Dimension(d.width+450,d.height+30));
+		this.SliderPanel.setBackground(Color.white);
+		slider.setValue(50);
+        slider.setMaximum(100);
+        slider.setMinorTickSpacing(5);
+        slider.setMajorTickSpacing(10);
+        slider.setPaintTicks(true);
+        slider.setPaintLabels(true);
+		this.SliderPanel.add(this.slider, "South");	
+		action();
+	}
+
+	public void setPaintMap(List <Settlement> settlement){
+		this.map= new PaintMap(settlement);
+
+		this.map.addMouseListener(new MouseAdapter() {
+			public void mousePressed(MouseEvent e) {
+				int x=e.getX();
+				int y=e.getY();
+				for (int i=0; i<settlement.size(); i++) {
+					int lx=settlement.get(i).getLocation().getPosition().getX();
+					int ly=settlement.get(i).getLocation().getPosition().getY();
+					int lw=settlement.get(i).getLocation().getSize().getWidth();
+					int lh=settlement.get(i).getLocation().getSize().getHeight();
+					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
+						
+						StatisticsWindow sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett);
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getMiddle(),"Center");
+						
+						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
+
+						sw.setfilterText(sw.getName());
+						
+						
+						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+						sw.getStatisticWindow().setSize(700,550);
+						sw.getStatisticWindow().setVisible(true);
+					}
+				}
+			}
+		});
+	}
+	
+	public void action() {
 		this.editM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mw= new MutationWindow(mapSett);
@@ -122,8 +185,10 @@ public class MainWindow {
 
 		this.stop.addActionListener(new ActionListener()
 		{public void actionPerformed(ActionEvent e) {
-			
-			
+			Main.num=0;
+			root.dispose();
+			Main.OpenFrame(mapSett);
+
 		}
 		});
 		
@@ -191,6 +256,18 @@ public class MainWindow {
 
 		});
 		
+		this.pause.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Thread.sleep(10000);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+				
+			}
+
+		});
 		
 		this.statistics.addActionListener(new ActionListener()
 		{
@@ -212,64 +289,6 @@ public class MainWindow {
 			}
 		});
 		
-		
-		this.File.add(this.editM);
-		this.File.add(this.exit);
-		this.Simulation.add(this.play);
-		this.Simulation.add(this.pause);
-		this.Simulation.add(this.stop);
-		this.Simulation.add(this.stpd);
-		this.Help.add(this.help);
-		this.Help.add(this.about);
-		this.MenuBar.add(this.File);
-		this.MenuBar.add(this.Simulation);
-		this.MenuBar.add(this.Help);
-		this.RootPanel.add(this.map);
-		Dimension d = this.slider.getPreferredSize();
-		this.slider.setPreferredSize(new Dimension(d.width+450,d.height+30));
-		this.SliderPanel.setBackground(Color.white);
-		slider.setValue(50);
-        slider.setMaximum(100);
-        slider.setMinorTickSpacing(5);
-        slider.setMajorTickSpacing(10);
-        slider.setPaintTicks(true);
-        slider.setPaintLabels(true);
-		this.SliderPanel.add(this.slider, "South");		
-	}
-
-	public void setPaintMap(List <Settlement> settlement){
-		this.map= new PaintMap(settlement);
-
-		this.map.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				int x=e.getX();
-				int y=e.getY();
-				for (int i=0; i<settlement.size(); i++) {
-					int lx=settlement.get(i).getLocation().getPosition().getX();
-					int ly=settlement.get(i).getLocation().getPosition().getY();
-					int lw=settlement.get(i).getLocation().getSize().getWidth();
-					int lh=settlement.get(i).getLocation().getSize().getHeight();
-					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
-						StatisticsWindow sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett);
-						
-						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
-						
-						sw.getStatisticWindow().getContentPane().add(sw.getMiddle(),"Center");
-						
-						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
-
-						sw.setfilterText(sw.getName());
-
-					
-						
-						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-						sw.getStatisticWindow().setSize(700,550);
-						sw.getStatisticWindow().setVisible(true);
-					}
-				}
-			}
-		});
-
 	}
 	
 	public void newSimulation() {

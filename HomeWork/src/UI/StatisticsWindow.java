@@ -50,6 +50,8 @@ public class StatisticsWindow {
 	private JTable table;
 	
 	private Point p;
+	
+
 				
 	public StatisticsWindow(Point p,Map map)	{
 				
@@ -62,7 +64,7 @@ public class StatisticsWindow {
 		this.label= new JLabel("filter: ");
 		
 		this.filterText= new JTextField();
-		
+				
 		this.high= new JPanel();
 		
 		this.low= new JPanel();
@@ -84,6 +86,8 @@ public class StatisticsWindow {
 		this.ok.setBorder(new EmptyBorder(10,30,10,30));
 		
 		this.name=this.getName();
+		
+		System.out.println(this.name);
 		
 		this.col.setPreferredSize(new Dimension(200,30));
 		
@@ -163,18 +167,20 @@ public class StatisticsWindow {
 	}
 	
 	public void createTable() {
-		
-		 model = new CreateModel(mapSett);
+				
+		model = new CreateModel(mapSett);
 		  
-		 this.table = new JTable(model);
+		this.table = new JTable(model);
 		  
-		 table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		table.getSelectionModel().setSelectionInterval(1, 0);
+
+		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		  
-		 table.setPreferredScrollableViewportSize(new Dimension(500, 70));
+		table.setFillsViewportHeight(true);
 		  
-		 table.setFillsViewportHeight(true);
-		  
-		 this.middle.add(new JScrollPane(table));
+		this.middle.add(new JScrollPane(table));
 		 
 		
 
@@ -183,6 +189,7 @@ public class StatisticsWindow {
 	
 	
 	public void getAction(String word) {
+		
 		this.save.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					fileChoose= new JFileChooser();

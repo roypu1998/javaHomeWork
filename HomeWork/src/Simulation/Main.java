@@ -22,6 +22,7 @@ import Virus.*;
 import Location.*;
 public class Main {
 	
+	public static int num=0;
 	public static void OpenFrame(Map mapSett) {
 		MainWindow mw= new MainWindow(mapSett);
 		JFrame frame=new JFrame();
@@ -30,19 +31,16 @@ public class Main {
 		for(int i=0; i<mapSett.Size();i++) {
 			settlement.add(mapSett.getSettlements()[i]);
 		}
-		
-		mw.setPaintMap(settlement);
-		
+		if(num>0)
+			mw.setPaintMap(settlement);
 		mw.BuildFrame();
+		num++;
 		JMenuBar menuBar = new JMenuBar();
 		menuBar=mw.getMenuBar();
 		menuBar.setPreferredSize(new Dimension(120,40));
 		frame.setJMenuBar(menuBar);
 		frame.add(mw.getRootPanel());
 		frame.getContentPane().add(mw.getSliderPanel(),"South");
-		
-		
-		
 		
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.setSize(700,550);
@@ -91,7 +89,6 @@ public class Main {
 		Map mapSett= sf.getSett();
 		
 		mapSett=makePplSickMain(mapSett,0.01);
-		
 		
 		return mapSett;
 		
