@@ -227,7 +227,8 @@ public class StatisticsWindow {
 					if(s.getName().equals(nameSett)) {
 						sizePpl=(int) (s.getNotSickPpl().size()*0.1);
 						makePplSick(s, sizePpl);
-						percent= (s.getSickPpl().size())/s.getPeople().size();
+						percent= (double)(s.getSickPpl().size())/s.getPeople().size();
+						System.out.println(percent);
 						s.getRamzorColor().setRamzor(percent);
 
 					}
