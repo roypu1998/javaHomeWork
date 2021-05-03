@@ -16,13 +16,22 @@ public enum RamzorColor {
 	private Color color;
 	
 	RamzorColor(double ramzorColor) {
-		
 		this.ramzor=ramzorColor;
 		this.getColor();
 		this.probTrans();
 	
 	}
 	
+	public double getRamzor() {
+		return ramzor;
+	}
+
+	public void setRamzor(double ramzor) {
+		this.ramzor = ramzor;
+		getColor();
+
+	}
+
 	public double probTrans() {
 		if (this.color.equals(Color.GREEN))
 			this.transferProbability=1;
@@ -36,9 +45,8 @@ public enum RamzorColor {
 	}
 	
 	public Color getColor() {
-
 		if (this.ramzor <= 0.4) 
-			this.color=Color.green;
+			this.color=Color.GREEN;
 		else if (this.ramzor  <= 0.6)
 			this.color=Color.YELLOW;
 		else if (this.ramzor  <= 0.8)

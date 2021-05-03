@@ -79,16 +79,14 @@ public class StatisticsWindow {
 		
 		this.statisticWindow= new JFrame("Statistics Window");
 		
-		createTable();
-
 		this.p=p;
 		
 		this.ok.setBorder(new EmptyBorder(10,30,10,30));
 		
 		this.name=this.getName();
 		
-		System.out.println(this.name);
-		
+		createTable();
+						
 		this.col.setPreferredSize(new Dimension(200,30));
 		
 		this.label.setFont(new Font(label.getFont().getName(),Font.PLAIN,20));
@@ -153,7 +151,6 @@ public class StatisticsWindow {
 	}
 	
 	public void recreateTable() {
-		
 		this.setMapSett(mapSett);
 		this.getStatisticWindow().getContentPane().add(this.getHigh(),"North");
 		
@@ -167,7 +164,9 @@ public class StatisticsWindow {
 	}
 	
 	public void createTable() {
-				
+		
+		int row=0;
+
 		model = new CreateModel(mapSett);
 		  
 		this.table = new JTable(model);
@@ -175,14 +174,19 @@ public class StatisticsWindow {
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		table.getSelectionModel().setSelectionInterval(1, 0);
-
+		
+		for(int i=0; i<this.table.getRowCount();i++) {
+			if(table.getValueAt(i, 0).equals(this.name)) {
+				row=i;
+		}
+		}
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
-		  
+		
+		table.getSelectionModel().setSelectionInterval(0, row);
+		
 		table.setFillsViewportHeight(true);
 		  
 		this.middle.add(new JScrollPane(table));
-		 
-		
 
 	}
 	
@@ -217,16 +221,19 @@ public class StatisticsWindow {
 		{
 			public void actionPerformed(ActionEvent e) {
 				int sizePpl;
+				double percent;
 				String nameSett=(String) table.getValueAt(table.getSelectedRow(), 0);
 				for(Settlement s:mapSett.getSettlements()) {
 					if(s.getName().equals(nameSett)) {
 						sizePpl=(int) (s.getNotSickPpl().size()*0.1);
 						makePplSick(s, sizePpl);
+						percent= (s.getSickPpl().size())/s.getPeople().size();
+						s.getRamzorColor().setRamzor(percent);
 
 					}
 				}
+				
 				recreateTable();
-
 			}
 		});
 		
