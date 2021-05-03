@@ -21,16 +21,26 @@ public class SouthAfricanVariant implements IVirus{
 	
 	public double contagionProbability(Person p) {
 		
+		Clock c= new Clock();
+		
+		long time=c.calcTime( ((Sick) p).getContagiousTime());
+
 		double contagionprobability;
 		
-		if (p.getAge() < 18 )
+		if(time<5) 
+			
+			contagionprobability=0;
 		
-			contagionprobability = 0.6;
+		else {
+			if (p.getAge() < 18 )
 		
-		else 
-			contagionprobability = 0.5;
+				contagionprobability = 0.6;
 		
+			else 
+				contagionprobability = 0.5;
+			}
 		return contagionprobability*p.contagionProbability();
+		
 	}
 	
 	@Override
@@ -38,14 +48,13 @@ public class SouthAfricanVariant implements IVirus{
 	public boolean tryToContagion(Person p1, Person p2) {	
 		
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
-		Clock c= new Clock();
-		long time=c.calcTime( ((Sick) p1).getContagiousTime());
+		
 		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
 						
-			if( percentage < rnd && time>=5) { 
+			if( percentage < rnd) { 
 				
 				return true;
 			}
@@ -57,7 +66,7 @@ public class SouthAfricanVariant implements IVirus{
 	
 	public boolean tryToKill(Sick s) {
 		
-		long t=new Clock().calcTime(s.getContagiousTime());
+		int t=new Clock().calcTime(s.getContagiousTime());
 				
 		double probability;
 		

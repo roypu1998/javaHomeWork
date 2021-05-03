@@ -21,7 +21,9 @@ public class Settlement {
 	
 	private Location location;
 	
-	private List<Person> people, notSickPpl, SickPpl;
+	private List<Person> people, notSickPpl;
+	
+	private List<Sick> SickPpl;
 	
 	private RamzorColor ramzorColor;
 	
@@ -35,6 +37,12 @@ public class Settlement {
 		this.SickPpl= new ArrayList<>();
 		this.ramzorColor=ramzorColor;
 		this.connectedAreas= new ArrayList<>();
+	}
+	
+	
+	public Settlement RandConnectedArea() {
+		int x= rand.nextInt(this.connectedAreas.size());
+		return this.connectedAreas.get(x);
 	}
 	
 	public List<Person> getNotSickPpl() {
@@ -72,11 +80,11 @@ public class Settlement {
 		return this.countDeath;
 	}
 	
-	public List<Person> getSickPpl() {
+	public List<Sick> getSickPpl() {
 		return SickPpl;
 	}
 
-	public void setSickPpl(List<Person> sickPpl) {
+	public void setSickPpl(List<Sick> sickPpl) {
 		SickPpl = sickPpl;
 	}
 	
@@ -135,7 +143,6 @@ public class Settlement {
 	}
 	
 	public Point randomLocation() {
-		
 		int x,y,w,h;
 		
 		x=this.getLocation().getPosition().getX();	
@@ -155,7 +162,7 @@ public class Settlement {
 	public boolean addPerson(Person p) {
 		
 		if(p instanceof Sick)
-			this.getSickPpl().add(p);
+			this.getSickPpl().add((Sick) p);
 		else {
 			this.getNotSickPpl().add(p);
 		}
@@ -168,7 +175,7 @@ public class Settlement {
 	public boolean addSickPerson() {
 		
 		Sick sc;
-		
+				
 		int numOfPpl, sickPpl;
 			
 		numOfPpl=this.getPeople().size();
@@ -183,12 +190,12 @@ public class Settlement {
 				
 			Person p=this.getPeople().get(x);
 				
-			sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(), new BritishVariant() );
+			sc= new Sick(p.getAge(),p.getLocation(),p.getSettlement(),Clock.now(), p.getSettlement().getRandVirus());
 				
 			this.getNotSickPpl().remove(p);
-				
+			this.getPeople().remove(p);
+			this.getPeople().add(sc);
 			this.getSickPpl().add(sc);
-			
 		}
 		
 		return true;	
@@ -217,15 +224,18 @@ public class Settlement {
 			return false;
 		
 		if (prob>x) {
-			
+
 			p.getSettlement().getPeople().remove(p);
 			
-			if(p instanceof Sick) 
-				s.SickPpl.add(p);
-			
-			else
+			if(p instanceof Sick) {
+				s.SickPpl.add((Sick) p);
+				p.getSettlement().getSickPpl().remove(p);
+			}
+			else {
 				s.notSickPpl.add(p);
-			
+				p.getSettlement().getNotSickPpl().remove(p);
+
+			}
 			s.people.add(p);
 			
 			return true;

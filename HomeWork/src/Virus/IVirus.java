@@ -8,7 +8,7 @@ public interface IVirus {
 	
 	public boolean tryToContagion(Person p1, Person p2);
 	
-	public  boolean tryToKill(Sick s);
+	public boolean tryToKill(Sick s);
 
 
 }

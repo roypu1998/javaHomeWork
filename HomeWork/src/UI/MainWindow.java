@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import Location.*;
 import Location.Point;
 import Population.*;
 import Simulation.Clock;
 import Simulation.Main;
+import Virus.IVirus;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -29,6 +31,8 @@ public class MainWindow {
 	private JPanel  SliderPanel, RootPanel;
 	
 	private JPanel middlePanel;
+	
+	private MutationWindow mw;
 	
 	private JScrollBar sp;
 	
@@ -79,7 +83,7 @@ public class MainWindow {
 		this.stpd= new JMenuItem("Set Ticks Per Day");
 		this.pause= new JMenuItem("Pause");
 		this.play= new JMenuItem("Play");
-		
+
 	}
 	
 	
@@ -89,7 +93,7 @@ public class MainWindow {
 		this.File.add(this.statistics);
 		this.editM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				MutationWindow mw= new MutationWindow(mapSett);
+				mw= new MutationWindow(mapSett);
 
 			}
 		});
@@ -115,6 +119,13 @@ public class MainWindow {
 		}
 		});
 		
+
+		this.stop.addActionListener(new ActionListener()
+		{public void actionPerformed(ActionEvent e) {
+			
+			
+		}
+		});
 		
 		this.load.addActionListener(new ActionListener()
 				{public void actionPerformed(ActionEvent e) {
@@ -170,6 +181,16 @@ public class MainWindow {
 				
 			}
 		});
+		
+		this.play.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e) {
+				
+				newSimulation();
+			}
+
+		});
+		
 		
 		this.statistics.addActionListener(new ActionListener()
 		{
@@ -249,6 +270,71 @@ public class MainWindow {
 			}
 		});
 
+	}
+	
+	public void newSimulation() {
+		int numSick,randNum, randVirus,sizeSick,numMove, numPpl;
+		Random rand= new Random();
+		Person p1,p2;
+		Clock c=new Clock();
+		boolean flag;
+		List <IVirus> viruses= new ArrayList<>();
+
+		for (Settlement s: mapSett.getSettlements()) {
+			numSick=(int) Math.ceil(s.getSickPpl().size()*0.2);
+			randNum= rand.nextInt(s.getSickPpl().size());
+			for (int i=0; i<numSick;i++) {
+				for (int j=0; j<3; j++) {
+					p1=s.getSickPpl().get(randNum);
+					p2=s.getNotSickPpl().get(j);
+					flag=s.getSickPpl().get(randNum).getVirus().tryToContagion(p1, p2);
+					if(flag) {
+						viruses=mw.mutationVirus(s.getSickPpl().get(randNum).getVirus());
+						randVirus=rand.nextInt(viruses.size());
+						p2.contagion(viruses.get(randVirus));
+					}
+				}
+			}
+		}
+
+		for (Settlement s: mapSett.getSettlements()) {
+			sizeSick=s.getSickPpl().size();
+			for(int i=0; i<sizeSick; i++) {
+				if(c.calcTime(s.getSickPpl().get(i).getContagiousTime())>=25) {
+					s.getSickPpl().get(i).recover();
+				}
+			}
+		}
+
+		for (Settlement s: mapSett.getSettlements()) {
+			numMove=(int) Math.ceil(s.getPeople().size()*0.03);
+			numPpl=s.getPeople().size();
+			for (int i=0; i<numMove; i++) {
+				flag=s.transferPerson(s.getPeople().get(rand.nextInt(numPpl)), s.RandConnectedArea());
+				if (flag) {
+					numPpl--;
+				}
+
+			}
+			
+		}
+
+		for (Settlement s: mapSett.getSettlements()) {
+			for(int i=0; i<s.getNotSickPpl().size();i++) {
+				if(s.getNotSickPpl().get(i) instanceof Healthy && s.getVacineNum()>0) {
+					Person p=(((Healthy) s.getNotSickPpl().get(i)).vaccinate());
+					s.setVacineNum(-1);
+			}
+			}
+			
+		}
+		
+		Clock.nextTick();
+		try {
+			Thread.sleep(this.slider.getValue());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public PaintMap getMap() {

@@ -5,8 +5,11 @@ import java.util.Random;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
 
 import Country.Map;
+import Virus.*;
 
 public class MutationWindow extends JFrame {
 			
@@ -53,6 +56,48 @@ public class MutationWindow extends JFrame {
 		model.addRow(new Object[]{t, f, t});
 		model.addRow(new Object[]{f, t, f});
 
+	}
+	
+	public List<IVirus> mutationVirus(IVirus nameVirus){
+		int row;
+		List<IVirus> viruses= new ArrayList <>();
+		if(nameVirus instanceof BritishVariant) {
+			row=1;	
+			for (int column=0; column<this.table.getColumnCount();column++) {
+					if(this.table.getValueAt(row, column).equals(true)) {
+						switch(column){
+						case 0: viruses.add(new BritishVariant());
+						case 1: viruses.add(new SouthAfricanVariant());
+						case 2: viruses.add(new ChineseVariant());
+						}
+					}
+			}
+		}
+		if(nameVirus instanceof SouthAfricanVariant) {
+			row=2;	
+			for (int column=0; column<this.table.getColumnCount();column++) {
+					if(this.table.getValueAt(row, column).equals(true)) {
+						switch(column){
+						case 0: viruses.add(new BritishVariant());
+						case 1: viruses.add(new SouthAfricanVariant());
+						case 2:  viruses.add(new ChineseVariant());
+						}
+					}
+			}
+		}
+		if(nameVirus instanceof ChineseVariant) {
+			row=3;	
+			for (int column=0; column<this.table.getColumnCount();column++) {
+					if(this.table.getValueAt(row, column).equals(true)) {
+						switch(column){
+						case 0: viruses.add(new BritishVariant());
+						case 1: viruses.add(new SouthAfricanVariant());
+						case 2:  viruses.add(new ChineseVariant());
+						}
+					}
+			}
+		}
+		return viruses;
 	}
 	
 	public boolean[][] getChecks(){

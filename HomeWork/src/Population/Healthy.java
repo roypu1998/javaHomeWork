@@ -19,6 +19,7 @@ public class Healthy extends Person{
 		Clock c=new Clock();
 		Vaccinated vac= new Vaccinated(this.getAge(),this.getLocation(),this.getSettlement(),this.coefficientProbability,c.now());
 		this.getSettlement().addPerson(vac);
+		this.getSettlement().getNotSickPpl().remove(this);
 		this.getSettlement().getPeople().remove(this);
 		return vac;
 

@@ -96,6 +96,8 @@ public class Main {
 		return mapSett;
 		
 	}
+	
+	
 	public static void main(String args[]) {
 		
 		Map mapSett = new Map();
@@ -107,11 +109,7 @@ public class Main {
 		Random rand= new Random();
 		
 		OpenFrame(mapSett);
-		
-		Clock c= new Clock();
-		
-		System.out.println(c.now());
-
+				
 		
 		//int numOfIterations =0;
 		

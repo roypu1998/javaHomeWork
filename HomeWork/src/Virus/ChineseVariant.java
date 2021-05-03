@@ -14,18 +14,23 @@ public class ChineseVariant implements IVirus {
 	Random rand= new Random();
 	
 	public double contagionProbability(Person p) {
-		
+		Clock c= new Clock();
+		long time=c.calcTime( ((Sick) p).getContagiousTime());
+
 		double contagionprobability;
 		
-		if (p.getAge() < 18 )
-			contagionprobability = 0.2;
+		if(time<5) 
+			contagionprobability=0.0;
+		else {
+			if (p.getAge() < 18 )
+				contagionprobability = 0.2;
 		
-		else if ( p.getAge() > 17 && p.getAge() < 55)
-			contagionprobability = 0.5;
+			else if ( p.getAge() > 17 && p.getAge() < 55)
+				contagionprobability = 0.5;
 		
-		else
-			contagionprobability = 0.7;
-		
+			else
+				contagionprobability = 0.7;
+		}
 		return contagionprobability*p.contagionProbability();
 	}
 	
@@ -40,15 +45,13 @@ public class ChineseVariant implements IVirus {
 	
 	public boolean tryToContagion(Person p1, Person p2) {
 		double distance = this.calcDistance(p1.getLocation(), p2.getLocation());
-		Clock c= new Clock();
-		long time=c.calcTime( ((Sick) p1).getContagiousTime());
 		if(p2 instanceof Healthy) {
 			
 			double rnd= rand.nextDouble();			
 			double percentage =this.contagionProbability(p2)*Math.min(1.0,0.14*Math.exp (2-(0.25*distance)));
 			
 			
-			if( percentage < rnd && time>=5) { 
+			if( percentage < rnd) { 
 				
 				return true;
 			}
@@ -59,7 +62,7 @@ public class ChineseVariant implements IVirus {
 
 	
 	public boolean tryToKill(Sick s) {
-		long t=new Clock().calcTime(s.getContagiousTime());
+		int t=new Clock().calcTime(s.getContagiousTime());
 
 		double probability;
 				

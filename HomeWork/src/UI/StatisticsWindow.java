@@ -129,7 +129,7 @@ public class StatisticsWindow {
 
 	}
 	
-	public void makePplSick(Settlement sett, double numOfSick) {
+	public void makePplSick(Settlement sett, int numOfSick) {
 
 		int randNum,numOfPpl= sett.getNotSickPpl().size();
 		Sick sc;
@@ -142,9 +142,8 @@ public class StatisticsWindow {
 					sett.getRandVirus());
 			sett.getNotSickPpl().remove(p);
 			sett.getPeople().remove(p);
-			sett.getPeople().add(sc);
+			sett.addPerson(sc);
 			x--;
-			sett.getSickPpl().add(sc);
 		}
 		
 	}

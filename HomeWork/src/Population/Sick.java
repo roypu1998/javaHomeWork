@@ -10,9 +10,7 @@ public class Sick extends Person{
 	private IVirus virus;
 	
 	public Sick(int age,Point p,Settlement s,long con,IVirus vir){
-		
 		super(age,p,s);
-		
 		this.contagiousTime=con;
 		this.virus=vir;
 	}
@@ -36,10 +34,12 @@ public class Sick extends Person{
 
 	
 	public Person recover(){
-		Healthy h= new Healthy(this.getAge(), this.getLocation(), this.getSettlement());
-		this.getSettlement().addPerson(h);
+		Convalescent c= new Convalescent(this.getAge(), this.getLocation(), this.getSettlement(), this.getVirus());
 		this.getSettlement().getPeople().remove(this);
-		return h;
+		this.getSettlement().addPerson(c);
+		this.getSettlement().getSickPpl().remove(this);
+		this.getSettlement().getNotSickPpl().add(c);
+		return c;
 	}
 	
 	public boolean tryToDie(){
