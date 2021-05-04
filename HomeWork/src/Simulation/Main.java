@@ -104,7 +104,7 @@ public class Main {
 		mapSett= newMapLoad(simulationfile);
 		
 		Random rand= new Random();
-		
+
 		OpenFrame(mapSett);
 				
 		

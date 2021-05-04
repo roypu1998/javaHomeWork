@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.*;
@@ -23,8 +25,11 @@ import Simulation.Main;
 
 public class StatisticsWindow {
 
-
+	public static int change=0;
+	
 	private JFrame statisticWindow;
+	
+	private DefaultTableModel tableModel;
 	
 	private JPanel high, middle, low;
 	
@@ -47,14 +52,17 @@ public class StatisticsWindow {
 	 
 	private CreateModel model;
 	
-	private JTable table;
+	private JTable table, tempTable;
 	
 	private Point p;
 	
+	private MainWindow mw;
 
 				
-	public StatisticsWindow(Point p,Map map)	{
-				
+	public StatisticsWindow(Point p,Map map,MainWindow mw)	{
+		
+		this.mw= mw;
+		
 		this.addSick= new JButton("Add Sick");
 		
 		this.save= new JButton("Save");
@@ -200,9 +208,8 @@ public class StatisticsWindow {
 					fileChoose.showSaveDialog(new JFrame("save"));
 					fileChoose.setCurrentDirectory(new java.io.File("."));
 					fileChoose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-					System.out.println(fileChoose.getSelectedFile().getAbsolutePath());
 					StatisticFile sf= new StatisticFile();
-					sf.exportToCSV(table, fileChoose.getSelectedFile().getAbsolutePath());
+					sf.exportToCSV(tempTable, fileChoose.getSelectedFile().getAbsolutePath());
 			
 		}
 		});
@@ -221,6 +228,7 @@ public class StatisticsWindow {
 		{
 			public void actionPerformed(ActionEvent e) {
 				int sizePpl;
+				RamzorColor rc;
 				double percent;
 				String nameSett=(String) table.getValueAt(table.getSelectedRow(), 0);
 				for(Settlement s:mapSett.getSettlements()) {
@@ -228,15 +236,20 @@ public class StatisticsWindow {
 						sizePpl=(int) (s.getNotSickPpl().size()*0.1);
 						makePplSick(s, sizePpl);
 						percent= (double)(s.getSickPpl().size())/s.getPeople().size();
-						System.out.println(percent);
-						s.getRamzorColor().setRamzor(percent);
+						rc=s.getRamzorColor();
+						s.setRamzorColor(s.getRamzorColor().getName(percent));
+						if(!rc.equals(s.getRamzorColor())) {
+							change++;
+						}
+						
 
 					}
 				}
-				
 				recreateTable();
+				colorChange();
 			}
 		});
+		
 		
 		this.Vaccinate.addActionListener(new ActionListener()
 		{
@@ -274,11 +287,26 @@ public class StatisticsWindow {
 		});
 		
 	}
-
+	
+	public void colorChange() {
+		if(change>0) {
+			Main m=new Main();
+			statisticWindow.dispose();
+			mw.getRoot().dispose();
+			m.OpenFrame(mapSett);
+			statisticWindow.setVisible(true);
+			change=0;
+		}
+	}
+	
 	public void filtervalue(String filterString,int chooseIndex ) {
+				
+		tableModel = new DefaultTableModel(names, 0);
+
+		this.tempTable = new JTable(tableModel);
 		
 		TableRowSorter<CreateModel> sorter = null;
-		
+		String s;
 		this.table.setRowSorter(sorter = new TableRowSorter<CreateModel>(this.model));
 		
 		try {
@@ -286,6 +314,17 @@ public class StatisticsWindow {
 			
 		} catch (java.util.regex.PatternSyntaxException e) {		
 		}
+		  for(int row = 0;row < table.getRowCount();row++) {
+              Object[] o={this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 0)
+            		  ,this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 1)
+             		 ,this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 2),
+             		 this.table.getModel().getValueAt(table.convertRowIndexToModel(row),3),
+             		 this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 4)
+             		 ,this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 5),
+             		this.table.getModel().getValueAt(table.convertRowIndexToModel(row), 6)};
+              tableModel.addRow(o);
+          }
+		  this.tempTable.setModel(tableModel);
 	}
 	
 	public void setMapSett(Map mapSett) {

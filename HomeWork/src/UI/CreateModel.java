@@ -38,7 +38,6 @@ class CreateModel extends AbstractTableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		Settlement s= this.data.at(rowIndex);
 		switch (columnIndex) {
-		
 		case 0: return s.getName();
 		case 1: return s.getClass().getSimpleName();
 		case 2: return s.getRamzorColor();

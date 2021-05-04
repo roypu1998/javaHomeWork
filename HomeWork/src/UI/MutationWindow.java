@@ -28,7 +28,6 @@ public class MutationWindow extends JFrame {
 		this.map=map;
 		this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		this.setSize(550,400);
-		this.setVisible(true);
 		this.checks=new boolean[3][3];
 		
 	    model = new DefaultTableModel(names1, 0) {
@@ -62,7 +61,7 @@ public class MutationWindow extends JFrame {
 		int row;
 		List<IVirus> viruses= new ArrayList <>();
 		if(nameVirus instanceof BritishVariant) {
-			row=1;	
+			row=0;	
 			for (int column=0; column<this.table.getColumnCount();column++) {
 					if(this.table.getValueAt(row, column).equals(true)) {
 						switch(column){
@@ -74,25 +73,25 @@ public class MutationWindow extends JFrame {
 			}
 		}
 		if(nameVirus instanceof SouthAfricanVariant) {
+			row=1;	
+			for (int column=0; column<this.table.getColumnCount();column++) {
+					if(this.table.getValueAt(row, column).equals(true)) {
+						switch(column){
+						case 0: viruses.add(new BritishVariant());
+						case 1: viruses.add(new SouthAfricanVariant());
+						case 2: viruses.add(new ChineseVariant());
+						}
+					}
+			}
+		}
+		if(nameVirus instanceof ChineseVariant) {
 			row=2;	
 			for (int column=0; column<this.table.getColumnCount();column++) {
 					if(this.table.getValueAt(row, column).equals(true)) {
 						switch(column){
 						case 0: viruses.add(new BritishVariant());
 						case 1: viruses.add(new SouthAfricanVariant());
-						case 2:  viruses.add(new ChineseVariant());
-						}
-					}
-			}
-		}
-		if(nameVirus instanceof ChineseVariant) {
-			row=3;	
-			for (int column=0; column<this.table.getColumnCount();column++) {
-					if(this.table.getValueAt(row, column).equals(true)) {
-						switch(column){
-						case 0: viruses.add(new BritishVariant());
-						case 1: viruses.add(new SouthAfricanVariant());
-						case 2:  viruses.add(new ChineseVariant());
+						case 2: viruses.add(new ChineseVariant());
 						}
 					}
 			}

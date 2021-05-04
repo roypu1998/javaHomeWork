@@ -60,9 +60,15 @@ public class MainWindow {
 		
 	private JDialog dialog;
 	
+	private MainWindow mainWindow;
+	
+	private StatisticsWindow sw;
+	
 	public MainWindow (Map mapSett) {
+		mainWindow=this;
 		this.chooser= new JFileChooser("C:\\Users\\reina\\OneDrive\\Desktop\\HomeWork2021\\javaFiles");
 		this.mapSett=mapSett;
+		mw= new MutationWindow(mapSett);
 		this.root= new JFrame("Main Window");
 		this.RootPanel=new JPanel();
 		this.MenuBar= new JMenuBar();
@@ -119,9 +125,10 @@ public class MainWindow {
 		action();
 	}
 
+
 	public void setPaintMap(List <Settlement> settlement){
 		this.map= new PaintMap(settlement);
-
+		
 		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int x=e.getX();
@@ -133,7 +140,7 @@ public class MainWindow {
 					int lh=settlement.get(i).getLocation().getSize().getHeight();
 					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
 						
-						StatisticsWindow sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett);
+						sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett,mainWindow);
 						
 						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 						
@@ -142,7 +149,6 @@ public class MainWindow {
 						sw.getStatisticWindow().getContentPane().add(sw.getLow(),"South");
 
 						sw.setfilterText(sw.getName());
-						
 						
 						sw.getStatisticWindow().setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 						sw.getStatisticWindow().setSize(700,550);
@@ -156,7 +162,7 @@ public class MainWindow {
 	public void action() {
 		this.editM.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				mw= new MutationWindow(mapSett);
+				mw.setVisible(true);
 
 			}
 		});
@@ -250,7 +256,7 @@ public class MainWindow {
 		this.play.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				
+				System.out.println("sup");
 				newSimulation();
 			}
 
@@ -272,7 +278,7 @@ public class MainWindow {
 		this.statistics.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),mapSett);
+				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),mapSett,mainWindow);
 				
 				sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 				
@@ -347,7 +353,8 @@ public class MainWindow {
 			}
 			
 		}
-		
+		sw=new StatisticsWindow(new Point(0,0), mapSett, mainWindow);
+		sw.colorChange();
 		Clock.nextTick();
 		try {
 			Thread.sleep(this.slider.getValue());

@@ -14,7 +14,6 @@ import Location.Point;
 
 public class PaintMap extends JPanel {
 	
-	
 	private List <Settlement> settlement;
 	
 	public PaintMap(List <Settlement> settlement) {
@@ -30,8 +29,7 @@ public class PaintMap extends JPanel {
 	}
 	public void paint(Graphics g) {	
 		Point p1,p2; 
-		
-		
+
 		Graphics g2=(Graphics) g;
 		
 		for (int i=0; i<this.settlement.size();i++) {
@@ -47,7 +45,6 @@ public class PaintMap extends JPanel {
 			g.fillRect(this.settlement.get(i).getLocation().getPosition().getX(),this.settlement.get(i).getLocation().getPosition().getY(),
 					this.settlement.get(i).getLocation().getSize().getWidth(),this.settlement.get(i).getLocation().getSize().getHeight());
 			g2.setColor(Color.black);
-			
 			g2.drawString(this.settlement.get(i).getName(),this.settlement.get(i).getLocation().getPosition().getX()
 					+(this.settlement.get(i).getLocation().getSize().getWidth()/2)
 					,this.settlement.get(i).getLocation().getPosition().getY()

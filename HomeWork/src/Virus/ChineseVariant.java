@@ -15,12 +15,23 @@ public class ChineseVariant implements IVirus {
 	
 	public double contagionProbability(Person p) {
 		Clock c= new Clock();
-		long time=c.calcTime( ((Sick) p).getContagiousTime());
-
+		long time;
 		double contagionprobability;
-		
-		if(time<5) 
-			contagionprobability=0.0;
+		if(p instanceof Sick) {
+			time=c.calcTime( ((Sick) p).getContagiousTime());
+			if(time<5) 
+				contagionprobability=0.0;
+			else {
+				if (p.getAge() < 18 )
+					contagionprobability = 0.2;
+			
+				else if ( p.getAge() > 17 && p.getAge() < 55)
+					contagionprobability = 0.5;
+			
+				else
+					contagionprobability = 0.7;
+			}
+		}
 		else {
 			if (p.getAge() < 18 )
 				contagionprobability = 0.2;

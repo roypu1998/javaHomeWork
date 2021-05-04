@@ -20,13 +20,11 @@ public class SouthAfricanVariant implements IVirus{
 	}
 	
 	public double contagionProbability(Person p) {
-		
-		Clock c= new Clock();
-		
-		long time=c.calcTime( ((Sick) p).getContagiousTime());
-
 		double contagionprobability;
-		
+		long time;
+		Clock c= new Clock();
+		if(p instanceof Sick) {
+		time=c.calcTime( ((Sick) p).getContagiousTime());
 		if(time<5) 
 			
 			contagionprobability=0;
@@ -39,6 +37,15 @@ public class SouthAfricanVariant implements IVirus{
 			else 
 				contagionprobability = 0.5;
 			}
+		}
+		else {
+			if (p.getAge() < 18 )
+				
+				contagionprobability = 0.6;
+		
+			else 
+				contagionprobability = 0.5;
+		}
 		return contagionprobability*p.contagionProbability();
 		
 	}

@@ -10,9 +10,11 @@ public class BritishVariant implements IVirus{
 
 	public double contagionProbability(Person p) {
 		Clock c= new Clock();
-		long time=c.calcTime( ((Sick) p).getContagiousTime());
-		if (time<5)
-			return 0;
+		if(p instanceof Sick) {
+			long time=c.calcTime( ((Sick) p).getContagiousTime());
+			if (time<5)
+				return 0;
+		}
 		return 0.70*p.contagionProbability();
 	}
 

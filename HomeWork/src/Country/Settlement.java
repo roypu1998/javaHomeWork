@@ -123,7 +123,8 @@ public class Settlement {
 	}
 
 	public RamzorColor getRamzorColor() {
-		return ramzorColor;
+		this.ramzorColor=this.ramzorColor.getName(this.ramzorColor.getRamzorColor());
+		return this.ramzorColor;
 	}
 
 	public void setRamzorColor(RamzorColor ramzorColor) {

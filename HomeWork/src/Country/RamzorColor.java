@@ -3,7 +3,6 @@ package Country;
 import java.awt.Color;
 
 public enum RamzorColor {
-	
 	Green(0.4),
 	Yellow(0.6),
 	Orange(0.8),
@@ -19,7 +18,6 @@ public enum RamzorColor {
 		this.ramzor=ramzorColor;
 		this.getColor();
 		this.probTrans();
-	
 	}
 	
 	public double getRamzor() {
@@ -29,7 +27,6 @@ public enum RamzorColor {
 	public void setRamzor(double ramzor) {
 		this.ramzor = ramzor;
 		getColor();
-
 	}
 
 	public double probTrans() {
@@ -57,7 +54,6 @@ public enum RamzorColor {
 	}
 	
 	public  RamzorColor getName(double rc) {
-		
 		if (rc <= 0.4)
 			return Green;
 		else if (rc <= 0.6)
@@ -67,6 +63,8 @@ public enum RamzorColor {
 		else
 			return Red;
 	}
+	
+
 	
 	
 	public double getRamzorColor() {
