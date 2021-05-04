@@ -64,6 +64,9 @@ public class BritishVariant implements IVirus{
 		double rnd=rand.nextDouble();
 		
 		if( die >= rnd) {
+			s.getSettlement().setCountDeath(1);
+			s.getSettlement().getPeople().remove(s);
+			s.getSettlement().getSickPpl().remove(s);
 			return true;
 		}
 		

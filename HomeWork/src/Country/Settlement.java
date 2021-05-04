@@ -210,7 +210,7 @@ public class Settlement {
 	}
 
 	public void setCountDeath(int countDeath) {
-		this.countDeath = countDeath;
+		this.countDeath += countDeath;
 	}
 
 	public boolean transferPerson(Person p, Settlement s) {

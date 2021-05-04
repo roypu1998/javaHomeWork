@@ -38,7 +38,6 @@ public class Sick extends Person{
 			if(this.getSettlement().getNotSickPpl().get(i) instanceof Convalescent)
 				num++;
 		}
-		System.out.println(num);
 		Convalescent c= new Convalescent(this.getAge(), this.getLocation(), this.getSettlement(), this.getVirus());
 		this.getSettlement().getPeople().remove(this);
 		this.getSettlement().addPerson(c);
