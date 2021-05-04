@@ -259,7 +259,6 @@ public class MainWindow {
 		this.play.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				System.out.println("sup");
 				newSimulation();
 			}
 
@@ -310,26 +309,29 @@ public class MainWindow {
 
 		for (Settlement s: mapSett.getSettlements()) {
 			numSick=(int) Math.ceil(s.getSickPpl().size()*0.2);
-			randNum= rand.nextInt(s.getSickPpl().size());
-			for (int i=0; i<numSick;i++) {
-				for (int j=0; j<3; j++) {
-					p1=s.getSickPpl().get(randNum);
-					p2=s.getNotSickPpl().get(j);
-					flag=s.getSickPpl().get(randNum).getVirus().tryToContagion(p1, p2);
-					if(flag) {
-						viruses=mw.mutationVirus(s.getSickPpl().get(randNum).getVirus());
-						randVirus=rand.nextInt(viruses.size());
-						p2.contagion(viruses.get(randVirus));
+			if(s.getSickPpl().size()!=0) {
+				randNum= rand.nextInt(s.getSickPpl().size());
+				for (int i=0; i<numSick;i++) {
+					for (int j=0; j<3; j++) {
+						p1=s.getSickPpl().get(randNum);
+						p2=s.getNotSickPpl().get(j);
+						flag=s.getSickPpl().get(randNum).getVirus().tryToContagion(p1, p2);
+						if(flag) {
+							viruses=mw.mutationVirus(s.getSickPpl().get(randNum).getVirus());
+							randVirus=rand.nextInt(viruses.size());
+							p2.contagion(viruses.get(randVirus));
+						}
 					}
 				}
 			}
 		}
-
 		for (Settlement s: mapSett.getSettlements()) {
-			sizeSick=s.getSickPpl().size();
+			sizeSick=s.getPeople().size();
 			for(int i=0; i<sizeSick; i++) {
-				if(c.calcTime(s.getSickPpl().get(i).getContagiousTime())>=25) {
-					s.getSickPpl().get(i).recover();
+				if(s.getPeople().get(i) instanceof Sick) {
+					if(c.calcTime(((Sick) s.getPeople().get(i)).getContagiousTime())>=2) {
+						((Sick) s.getPeople().get(i)).recover();
+					}
 				}
 			}
 		}

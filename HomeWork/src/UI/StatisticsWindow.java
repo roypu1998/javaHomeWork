@@ -188,7 +188,7 @@ public class StatisticsWindow {
 		for(int i=0; i<this.table.getRowCount();i++) {
 			if(table.getValueAt(i, 0).equals(this.name)) {
 				row=i;
-		}
+			}
 		}
 		table.setPreferredScrollableViewportSize(new Dimension(500, 70));
 		

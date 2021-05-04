@@ -2,6 +2,8 @@ package Country;
 
 import java.awt.Color;
 
+import Population.Vaccinated;
+
 public enum RamzorColor {
 	Green(0.4),
 	Yellow(0.6),
@@ -19,6 +21,8 @@ public enum RamzorColor {
 		this.getColor();
 		this.probTrans();
 	}
+	
+
 	
 	public double getRamzor() {
 		return ramzor;

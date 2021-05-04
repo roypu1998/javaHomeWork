@@ -1,6 +1,7 @@
 package Country;
 
 import Location.Location;
+import Population.Vaccinated;
 
 public class Kibbutz extends Settlement {
 	
@@ -16,6 +17,14 @@ public class Kibbutz extends Settlement {
 		RamzorColor rc = null;
 		
 		return rc.getName(c);
+	}
+	
+	public boolean equals(Kibbutz k) {
+		boolean flag=super.equals(k);
+		if(flag) {
+			return true;
+		}
+		return false;
 	}
 	
 	/*

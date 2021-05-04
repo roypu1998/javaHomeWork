@@ -1,6 +1,7 @@
 package Country;
 
 import Location.Location;
+import Population.Vaccinated;
 
 public class City extends Settlement {
 	
@@ -17,6 +18,13 @@ public class City extends Settlement {
 		return rc.getName(c);
 	}
 	
+	public boolean equals(City c) {
+		boolean flag=super.equals(c);
+		if(flag) {
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * public String toString() { return "City "+super.toString();
 	 * 

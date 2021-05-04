@@ -55,6 +55,13 @@ public class Vaccinated extends Person {
 		return v;
 	}
 	
+	public boolean equals(Vaccinated v) {
+		boolean flag=super.equals(v);
+		if(this.coefficientProbability==v.coefficientProbability&& this.vaccinationTime==v.vaccinationTime &&flag) {
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * public String toString() { return
 	 * "Vaccinated {age= "+super.getAge()+" location= "+super.getLocation().toString

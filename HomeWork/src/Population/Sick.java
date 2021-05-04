@@ -56,6 +56,13 @@ public class Sick extends Person{
 		return 0.001;
 	}
 	
+	public boolean equals(Sick s) {
+		boolean flag=super.equals(s);
+		if(this.contagiousTime==s.contagiousTime&& this.virus==s.virus &&flag) {
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * public String toString() { return
 	 * "Sick {age= "+super.getAge()+" location= "+super.getLocation().toString()+

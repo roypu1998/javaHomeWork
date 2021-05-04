@@ -35,6 +35,13 @@ public class Healthy extends Person{
 		return 0.002;
 	}
 	
+	public boolean equals(Healthy h) {
+		boolean flag=super.equals(h);
+		if(this.coefficientProbability==h.coefficientProbability &&flag) {
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * public String toString() { return
 	 * "Healthy {age= "+super.getAge()+" location= "+super.getLocation().toString()+

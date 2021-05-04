@@ -27,6 +27,11 @@ public class Point {
 		this.y = y;
 	}
 	
+	public boolean equals(Point p) {
+		if(this.x==p.x&& this.y==p.y)
+			return true;
+		return false;
+	}
 	/*
 	 * public String toString() { return String.format("Point {x=%d, y=%d}",this.x,
 	 * this.y ); }

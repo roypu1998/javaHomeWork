@@ -3,6 +3,7 @@ package Country;
 import java.lang.Math;
 
 import Location.Location;
+import Population.Vaccinated;
 
 public class Moshav extends Settlement {
 	
@@ -27,6 +28,13 @@ public class Moshav extends Settlement {
 			return false;
 	}
 	
+	public boolean equals(Moshav m) {
+		boolean flag=super.equals(m);
+		if(flag) {
+			return true;
+		}
+		return false;
+	}
 	/*
 	 * public String toString() { return "Moshav "+super.toString();
 	 * 

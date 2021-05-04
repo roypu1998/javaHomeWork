@@ -53,7 +53,12 @@ public abstract class Person {
 	
 	public String toString() {
 		return "Person\nPerson's age:"+this.age+"\nLocation:"+this.location+"\nSettlement:"+this.settlement+"\n";
-		
 	} 
+	
+	public boolean equals(Person p) { 
+		if (this.age == p.age &&this.location==p.location && this.settlement==p.settlement)  
+	          return true;
+		return false;
+	      }  
 
 }

@@ -27,6 +27,11 @@ public class Location {
 		this.size = size;
 	}
 
+	public boolean equals(Location l) {
+		if(l.getPosition().equals(l.getPosition())&& l.getPosition().equals(l.getSize()))
+				return true;
+		return false;
+	}
 	/*
 	 * public String toString() { return "Location {point= "+
 	 * this.position.toString()+" size= "+this.size.toString()+"}"; }

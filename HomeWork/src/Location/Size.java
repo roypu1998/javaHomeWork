@@ -25,6 +25,11 @@ public class Size {
 		this.height = height;
 	}
 	
+	public boolean equals(Size s) {
+		if(this.height==s.height&& this.width==s.width)
+			return true;
+		return false;
+	}
 	/*
 	 * public String toString() { return
 	 * String.format("Size {width=%d, height=%d}",this.width, this.height ); }

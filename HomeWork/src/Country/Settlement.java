@@ -138,7 +138,6 @@ public class Settlement {
 	}
 	
 	public double contagiousPercent() {
-		
 		int sickPeople = this.SickPpl.size();
 		return (double)sickPeople/this.people.size();
 	}
@@ -255,6 +254,26 @@ public class Settlement {
 		this.maxPpl=(int) (this.getPeople().size()*1.3);
 	}
 
+	public boolean equals(Settlement s) {
+		boolean flag=super.equals(s);
+		for(int i=0;i<s.getSickPpl().size();i++) {
+			flag=(s.getSickPpl().get(i)==this.getSickPpl().get(i));
+		}
+		for(int i=0;i<s.getNotSickPpl().size();i++) {
+			flag=(s.getNotSickPpl().get(i)==this.getNotSickPpl().get(i));
+		}
+		for(int i=0;i<s.getPeople().size();i++) {
+			flag=(s.getPeople().get(i)==this.getPeople().get(i));
+		}
+		for(int i=0;i<s.getConnectedAreas().size();i++) {
+			flag=(s.getConnectedAreas().get(i)==this.getConnectedAreas().get(i));
+		}
+		if(this.countDeath==s.countDeath&& this.location==s.location && this.maxPpl==s.maxPpl
+				&& this.name== s.name&& this.vacineNum==s.vacineNum&& this.ramzorColor==s.ramzorColor && flag) {
+			return true;
+		}
+		return false;
+	}	
 	/*
 	 * public String toString() { return "Settlement {name= "
 	 * +this.name+" location= "+this.location.toString()

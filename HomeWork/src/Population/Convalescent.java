@@ -21,6 +21,13 @@ public class Convalescent extends Person {
 		return this.coefficientProbability; 
 		}
 	
+	public boolean equals(Convalescent c) {
+		boolean flag=super.equals(c);
+		if(flag) {
+			return true;
+		}
+		return false;
+	}
 		/*
 		 * public String toString() { return
 		 * "Convalescent {age= "+super.getAge()+" location= "+super.getLocation().
