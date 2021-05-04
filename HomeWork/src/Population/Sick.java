@@ -16,7 +16,6 @@ public class Sick extends Person{
 	}
 	
 	public long getContagiousTime() {
-		this.contagiousTime=Clock.now();
 		return contagiousTime;
 	}
 
@@ -44,7 +43,6 @@ public class Sick extends Person{
 		this.getSettlement().getPeople().remove(this);
 		this.getSettlement().addPerson(c);
 		this.getSettlement().getSickPpl().remove(this);
-		this.getSettlement().getNotSickPpl().add(c);
 		return c;
 	}
 	

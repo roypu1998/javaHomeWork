@@ -21,10 +21,13 @@ import UI.MainWindow;
 import Virus.*;
 import Location.*;
 public class Main {
-	
+	public static Main m;
+	public Main() {
+		m=this;
+	}
 	public static int num=0;
 	public static void OpenFrame(Map mapSett) {
-		MainWindow mw= new MainWindow(mapSett);
+		MainWindow mw= new MainWindow(mapSett,m);
 		JFrame frame=new JFrame();
 		frame= mw.getRoot();
 		List<Settlement> settlement= new ArrayList<>();

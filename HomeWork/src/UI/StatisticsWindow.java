@@ -58,8 +58,10 @@ public class StatisticsWindow {
 	
 	private MainWindow mw;
 
-				
-	public StatisticsWindow(Point p,Map map,MainWindow mw)	{
+	private Main m;
+	
+	public StatisticsWindow(Point p,Map map,MainWindow mw,Main m)	{
+		this.m=m;
 		
 		this.mw= mw;
 		
@@ -290,11 +292,9 @@ public class StatisticsWindow {
 	
 	public void colorChange() {
 		if(change>0) {
-			Main m=new Main();
 			statisticWindow.dispose();
 			mw.getRoot().dispose();
 			m.OpenFrame(mapSett);
-			statisticWindow.setVisible(true);
 			change=0;
 		}
 	}

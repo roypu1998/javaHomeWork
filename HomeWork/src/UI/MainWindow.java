@@ -62,10 +62,13 @@ public class MainWindow {
 	
 	private MainWindow mainWindow;
 	
+	private Main m;
+	
 	private StatisticsWindow sw;
 	
-	public MainWindow (Map mapSett) {
+	public MainWindow (Map mapSett,Main m) {
 		mainWindow=this;
+		this.m=m;
 		this.chooser= new JFileChooser("C:\\Users\\reina\\OneDrive\\Desktop\\HomeWork2021\\javaFiles");
 		this.mapSett=mapSett;
 		mw= new MutationWindow(mapSett);
@@ -140,7 +143,7 @@ public class MainWindow {
 					int lh=settlement.get(i).getLocation().getSize().getHeight();
 					if (x>=lx && x<=lx+lw && y>=ly &&y<=ly+lh ) {
 						
-						sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett,mainWindow);
+						sw= new StatisticsWindow(settlement.get(i).getLocation().getPosition(),mapSett,mainWindow,m);
 						
 						sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 						
@@ -278,7 +281,7 @@ public class MainWindow {
 		this.statistics.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),mapSett,mainWindow);
+				StatisticsWindow sw= new StatisticsWindow(new Point(0,0),mapSett,mainWindow,m);
 				
 				sw.getStatisticWindow().getContentPane().add(sw.getHigh(),"North");
 				
@@ -353,7 +356,7 @@ public class MainWindow {
 			}
 			
 		}
-		sw=new StatisticsWindow(new Point(0,0), mapSett, mainWindow);
+		sw=new StatisticsWindow(new Point(0,0), mapSett, mainWindow,m);
 		sw.colorChange();
 		Clock.nextTick();
 		try {

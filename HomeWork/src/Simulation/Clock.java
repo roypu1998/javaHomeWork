@@ -11,11 +11,11 @@ public class Clock {
 	private static long ticksPerDay=1L;
 	
 	public static long now() {
-		
 		return clock;
 	}
 	
 	public int calcTime(long time) {
+		
 		return  (int) Math.ceil((this.now()-time)/this.ticksPerDay);
 	}
 	
