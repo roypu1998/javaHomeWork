@@ -20,12 +20,13 @@ import Population.*;
 import UI.MainWindow;
 import Virus.*;
 import Location.*;
-public class Main {
+public class Main{
 	public static Main m;
 	public Main() {
 		m=this;
 	}
 	public static int num=0;
+	
 	public static void OpenFrame(Map mapSett) {
 		MainWindow mw= new MainWindow(mapSett,m);
 		JFrame frame=new JFrame();
@@ -34,8 +35,25 @@ public class Main {
 		for(int i=0; i<mapSett.Size();i++) {
 			settlement.add(mapSett.getSettlements()[i]);
 		}
-		if(num>0)
-			mw.setPaintMap(settlement);
+		mw.setPaintMap(settlement);
+		mw.BuildFrame();
+		JMenuBar menuBar = new JMenuBar();
+		menuBar=mw.getMenuBar();
+		menuBar.setPreferredSize(new Dimension(120,40));
+		frame.setJMenuBar(menuBar);
+		frame.add(mw.getRootPanel());
+		frame.getContentPane().add(mw.getSliderPanel(),"South");
+		
+		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		frame.setSize(700,550);
+		frame.setVisible(true);
+		
+	}
+	
+	public static void OpenFrame1(Map mapSett) {
+		MainWindow mw= new MainWindow(mapSett,m);
+		JFrame frame=new JFrame();
+		frame= mw.getRoot();
 		mw.BuildFrame();
 		num++;
 		JMenuBar menuBar = new JMenuBar();
@@ -50,7 +68,6 @@ public class Main {
 		frame.setVisible(true);
 		
 	}
-	
 	public static Map makePplSickMain(Map mapSett, double percentage) {
 		
 		int numOfPpl, sickPpl;
@@ -88,8 +105,8 @@ public class Main {
 	public static Map newMapLoad(SimulationFile sf) {
 		
 		sf.ReadFile();
-				
-		Map mapSett= sf.getSett();
+		
+		Map mapSett= sf.getSett();	
 		
 		mapSett=makePplSickMain(mapSett,0.01);
 		
@@ -100,56 +117,21 @@ public class Main {
 	
 	public static void main(String args[]) {
 		
-		Map mapSett = new Map();
-	
-		SimulationFile simulationfile=new SimulationFile("src/homework_IO.txt",mapSett);
-				
-		mapSett= newMapLoad(simulationfile);
-		
-		Random rand= new Random();
-
-		OpenFrame(mapSett);
-				
-		
-		//int numOfIterations =0;
-		
 		/*
-		 * while (numOfIterations<5) {
+		 * Map mapSett = new Map();
 		 * 
-		 * boolean succes;
+		 * SimulationFile simulationfile=new
+		 * SimulationFile("src/homework_IO.txt",mapSett);
 		 * 
-		 * Person p1, p2;
+		 * mapSett= newMapLoad(simulationfile);
 		 * 
-		 * for (int i=0; i<sett.length;i++) {
+		 * Random rand= new Random();
 		 * 
-		 * for (int j=0; j<sett[i].getPeople().size();j++) {
-		 * 
-		 * if(sett[i].getPeople().get(j) instanceof Sick) {
-		 * 
-		 * p1=sett[i].getPeople().get(j);
-		 * 
-		 * for (int h=0; h<6;h++) {
-		 * 
-		 * p2=sett[i].getPeople().get(rand.nextInt(sett[i].getPeople().size()));
-		 * succes=africanVirus.tryToContagion(p1, p2); if (succes ==true) { sc=new
-		 * Sick(p2.getAge(),p2.getLocation(),p2.getSettlement(),Clock.now(),
-		 * africanVirus); sett[i].getPeople().remove(p2); sett[i].addPerson(sc); }
-		 * 
-		 * } } } } }
-		 * 
-		 * numOfIterations++;
+		 * OpenFrame(mapSett);
 		 */
 	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		OpenFrame1(null);
 	}
+
 
 }

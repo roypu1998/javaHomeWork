@@ -47,7 +47,9 @@ public class SimulationFile {
 	        BufferedReader inFile2 = new BufferedReader(new FileReader(this.nameFile));
 	        
 	        BufferedReader inFile3 = new BufferedReader(new FileReader(this.nameFile));
-
+	        
+	        sett=new Map();
+	        
 	        this.sett.setSize(lines-1);
 	        
 	        int size1=0, size2=0;
@@ -138,7 +140,7 @@ public class SimulationFile {
 	        
 	        inFile.close();
 	        inFile2.close();
-
+	    	
 	        
 	    } catch (IOException e) {
 	    	System.out.println("Error: "+ e);

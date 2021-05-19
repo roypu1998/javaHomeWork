@@ -1,10 +1,18 @@
 package UI;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
 
 import Location.*;
 import Location.Point;
@@ -18,13 +26,23 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+import java.util.Scanner;
+
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+ 
 import Country.Map;
 import Country.RamzorColor;
 import Country.Settlement;
 import IO.SimulationFile;
+import IO.StatisticFile;
 import Location.*;
 
-public class MainWindow {
+public class MainWindow extends Observable  implements Runnable{
+	
+	private double deathPercent=0.0;
+	
+	CyclicBarrier barrier;
 
 	private JFrame root;
 	
@@ -48,7 +66,7 @@ public class MainWindow {
 	
 	private JMenu File, Simulation, Help;
 	
-	private JMenuItem load, statistics, editM, exit, play, pause, stop, help, stpd, about;
+	private JMenuItem load, statistics, editM, exit, play, pause, stop, help, stpd, about, saveToLog;
 	
 	private List<Location> location;
 		
@@ -66,7 +84,23 @@ public class MainWindow {
 	
 	private StatisticsWindow sw;
 	
+	private Thread[] thread;
+	
+	private Logger logger;
+	
+	private FileHandler handler;
+	
 	public MainWindow (Map mapSett,Main m) {
+		try {
+			handler = new FileHandler("default2.log", true);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+        logger = Logger.getLogger("javaHW");
+        logger.addHandler(handler);
+         
 		mainWindow=this;
 		this.m=m;
 		this.chooser= new JFileChooser("C:\\Users\\reina\\OneDrive\\Desktop\\HomeWork2021\\javaFiles");
@@ -81,24 +115,26 @@ public class MainWindow {
 		this.about= new JMenuItem("About");
 		this.editM= new JMenuItem("Edit Mutation");
 		this.exit= new JMenuItem("Exit");
+		this.saveToLog=new JMenuItem("Save To Log");
 		this.File= new JMenu("File");
 		this.Help= new JMenu("Help");
 		this.help= new JMenuItem("Help");
 		this.load= new JMenuItem("Load");
-		this.sp= new JScrollBar();
 		this.Simulation= new JMenu("Simulation");
 		this.statistics= new JMenuItem("Statistics");
 		this.stop= new JMenuItem("Stop");
 		this.stpd= new JMenuItem("Set Ticks Per Day");
 		this.pause= new JMenuItem("Pause");
 		this.play= new JMenuItem("Play");
-
+		this.sp= new JScrollBar();
+	
 	}
 	
 	
 	public void BuildFrame() {
 		this.RootPanel.setLayout(new BoxLayout(this.RootPanel,BoxLayout.Y_AXIS));
 		this.File.add(this.load);
+		this.File.add(this.saveToLog);
 		this.File.add(this.statistics);
 		this.File.add(this.editM);
 		this.File.add(this.exit);
@@ -111,7 +147,7 @@ public class MainWindow {
 		this.MenuBar.add(this.File);
 		this.MenuBar.add(this.Simulation);
 		this.MenuBar.add(this.Help);
-		if (Main.num>0)
+		if (m.num>0)
 			this.RootPanel.add(this.map);
 		else
 			this.RootPanel.add(new JLabel ("load a new map to get started! "), "Center");
@@ -170,6 +206,36 @@ public class MainWindow {
 			}
 		});
 
+		this.saveToLog.addActionListener(new ActionListener()
+		{public void actionPerformed(ActionEvent e) {
+			JFileChooser fileChoose= new JFileChooser();
+			fileChoose.showSaveDialog(new JFrame("save"));
+			fileChoose.setCurrentDirectory(new java.io.File("."));
+			fileChoose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			
+			
+	        File file = new File("default2.log");
+	        File f=new File(fileChoose.getSelectedFile().getAbsolutePath());
+	        FileWriter fw;
+			try {
+				fw = new FileWriter(f);
+		        Scanner sc;
+				sc = new Scanner(file);
+				sc.useDelimiter(",|\r\n");
+			        fw.write(sc.next());
+			        while(sc.hasNext()){
+			            fw.write(sc.next());
+			            }
+			        fw.close();
+			        sc.close();
+
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+	       
+		}
+		});
+		
 		this.stpd.addActionListener(new ActionListener()
 		{public void actionPerformed(ActionEvent e) {
 			dialog= new JDialog(new JFrame("ticks per day"), "tick amount");
@@ -201,16 +267,15 @@ public class MainWindow {
 		}
 		});
 		
-		this.load.addActionListener(new ActionListener()
-				{public void actionPerformed(ActionEvent e) {
+		this.load.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
 				chooser.showOpenDialog(new JFrame("Choose Map"));
 				File file= chooser.getSelectedFile();
 				String nameFile= file.getPath();
 				root.dispose();
-				Main main = new Main();
 				SimulationFile sf= new SimulationFile(nameFile,mapSett);
-				mapSett=main.newMapLoad(sf);
-				main.OpenFrame(mapSett);
+				mapSett=m.newMapLoad(sf);
+				m.OpenFrame(mapSett);
 				}
 				});
 		
@@ -259,20 +324,29 @@ public class MainWindow {
 		this.play.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
-				newSimulation();
+				Runnable barrierAction = () ->Clock.nextTick();
+			     barrier = new CyclicBarrier(mapSett.getSettlements().length, barrierAction);
+				 thread= new Thread[mapSett.getSettlements().length];
+				 for (int i=0; i<mapSett.getSettlements().length; i++) { 
+					 thread[i]= new Thread(mainWindow,mapSett.getSettlements()[i].getName());
+					 thread[i].start(); 				
 			}
 
+		}
 		});
 		
 		this.pause.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e) {
+				long time = (long)(Math.random()*1000L);
 				try {
-					Thread.sleep(10000);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				
+				        Thread.currentThread().sleep(time);
+				} catch (InterruptedException e1){
+					System.out.println("Got an exception");
+		       }
+				setChanged();
+				notifyObservers(Thread.currentThread().getName()+" is awake!\n");
+
 			}
 
 		});
@@ -299,6 +373,11 @@ public class MainWindow {
 		
 	}
 	
+	public void run() {
+		newSimulation();
+	}
+	
+	
 	public void newSimulation() {
 		int numSick,randNum, randVirus,sizeSick,numMove, numPpl;
 		Random rand= new Random();
@@ -306,8 +385,12 @@ public class MainWindow {
 		Clock c=new Clock();
 		boolean flag;
 		List <IVirus> viruses= new ArrayList<>();
+		Settlement s = null;
+		for (int y=0; y<this.mapSett.getSettlements().length;y++) {
+			if(this.mapSett.getSettlements()[y].getName().equals(Thread.currentThread().getName()))
+				s=this.mapSett.getSettlements()[y];
 
-		for (Settlement s: mapSett.getSettlements()) {
+		}
 			numSick=(int) Math.ceil(s.getSickPpl().size()*0.2);
 			if(s.getSickPpl().size()!=0) {
 				randNum= rand.nextInt(s.getSickPpl().size());
@@ -324,8 +407,7 @@ public class MainWindow {
 					}
 				}
 			}
-		}
-		for (Settlement s: mapSett.getSettlements()) {
+		
 			sizeSick=s.getPeople().size();
 			for(int i=0; i<sizeSick; i++) {
 				if(s.getPeople().get(i) instanceof Sick) {
@@ -334,9 +416,8 @@ public class MainWindow {
 					}
 				}
 			}
-		}
+		
 
-		for (Settlement s: mapSett.getSettlements()) {
 			numMove=(int) Math.ceil(s.getPeople().size()*0.03);
 			numPpl=s.getPeople().size();
 			for (int i=0; i<numMove; i++) {
@@ -345,11 +426,9 @@ public class MainWindow {
 					numPpl--;
 				}
 
-			}
 			
 		}
 
-		for (Settlement s: mapSett.getSettlements()) {
 			for(int i=0; i<s.getNotSickPpl().size();i++) {
 				if(s.getNotSickPpl().get(i) instanceof Healthy && s.getVacineNum()>0) {
 					Person p=(((Healthy) s.getNotSickPpl().get(i)).vaccinate());
@@ -357,15 +436,31 @@ public class MainWindow {
 			}
 			}
 			
+		for(int i=0; i<s.getSickPpl().size();i++) {
+			s.getSickPpl().get(i).getVirus().tryToKill(s.getSickPpl().get(i));
 		}
+		this.deathPercent=(double)s.getCountDeath()/(double)s.getPeople().size();
+		if(this.deathPercent>=0.01) {
+			logger.info("settlement: "+s.getName()+"\nnumber of sick people: "+s.getSickPpl().size()
+					+"\nnumber of dead people: "+s.getCountDeath());
+			
+		}
+		this.deathPercent=0.0;
+		
+		
+		
+		
 		sw=new StatisticsWindow(new Point(0,0), mapSett, mainWindow,m);
 		sw.colorChange();
-		Clock.nextTick();
+		
 		try {
-			Thread.sleep(this.slider.getValue());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			barrier.await();
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		} catch (BrokenBarrierException e1) {
+			e1.printStackTrace();
 		}
+		
 	}
 	
 	public PaintMap getMap() {
