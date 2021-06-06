@@ -27,6 +27,12 @@ public class PaintMap extends JPanel {
 		y=l.getPosition().getY()+(l.getSize().getHeight()/2);
 		return new Point(x,y);
 	}
+	
+	
+	public int colorName(Color c1, Color c2) {
+		return (c1.getRGB()+c2.getRGB())/2;
+	}
+
 	public void paint(Graphics g) {	
 		Point p1,p2; 
 
@@ -36,6 +42,10 @@ public class PaintMap extends JPanel {
 			for (int j=0;j<this.settlement.get(i).getConnectedAreas().size();j++) {
 					p1=this.middlePoint(this.settlement.get(i).getLocation());
 					p2=this.middlePoint(this.settlement.get(i).getConnectedAreas().get(j).getLocation());
+					Color c1=this.settlement.get(i).getRamzorColor().getColor();
+					Color c2=this.settlement.get(i).getConnectedAreas().get(j).getRamzorColor().getColor();
+					Color color= new Color(colorName(c1, c2));
+					g2.setColor(color);
 					g2.drawLine(p1.getX(),p1.getY(),p2.getX(),p2.getY());
 				}
 			}
@@ -54,5 +64,6 @@ public class PaintMap extends JPanel {
 		
 
 	}
+	
 	
 }

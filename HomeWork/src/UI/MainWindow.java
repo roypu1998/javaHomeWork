@@ -66,7 +66,7 @@ public class MainWindow extends Observable  implements Runnable{
 	
 	private JMenu File, Simulation, Help;
 	
-	private JMenuItem load, statistics, editM, exit, play, pause, stop, help, stpd, about, saveToLog;
+	private JMenuItem load, statistics, editM, exit, play, pause, stop, help, stpd, about, saveToLog, recoverLogPath;
 	
 	private List<Location> location;
 		
@@ -81,6 +81,8 @@ public class MainWindow extends Observable  implements Runnable{
 	private MainWindow mainWindow;
 	
 	private Main m;
+	
+	private List<String> path;
 	
 	private StatisticsWindow sw;
 	
@@ -116,6 +118,7 @@ public class MainWindow extends Observable  implements Runnable{
 		this.editM= new JMenuItem("Edit Mutation");
 		this.exit= new JMenuItem("Exit");
 		this.saveToLog=new JMenuItem("Save To Log");
+		this.recoverLogPath=new JMenuItem("last log path");
 		this.File= new JMenu("File");
 		this.Help= new JMenu("Help");
 		this.help= new JMenuItem("Help");
@@ -127,7 +130,7 @@ public class MainWindow extends Observable  implements Runnable{
 		this.pause= new JMenuItem("Pause");
 		this.play= new JMenuItem("Play");
 		this.sp= new JScrollBar();
-	
+		this.path= new ArrayList<>();
 	}
 	
 	
@@ -135,6 +138,7 @@ public class MainWindow extends Observable  implements Runnable{
 		this.RootPanel.setLayout(new BoxLayout(this.RootPanel,BoxLayout.Y_AXIS));
 		this.File.add(this.load);
 		this.File.add(this.saveToLog);
+		this.File.add(this.recoverLogPath);
 		this.File.add(this.statistics);
 		this.File.add(this.editM);
 		this.File.add(this.exit);
@@ -166,8 +170,6 @@ public class MainWindow extends Observable  implements Runnable{
 
 
 	public void setPaintMap(List <Settlement> settlement){
-		this.map= new PaintMap(settlement);
-		
 		this.map.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent e) {
 				int x=e.getX();
@@ -205,17 +207,28 @@ public class MainWindow extends Observable  implements Runnable{
 
 			}
 		});
-
+		this.recoverLogPath.addActionListener(new ActionListener()
+		{public void actionPerformed(ActionEvent e) {
+			option.showMessageDialog(root,
+					path.get(path.size()-1),"path",
+				    JOptionPane.INFORMATION_MESSAGE);
+		if(path.size()>0)
+			path.remove(path.size()-1);
+		}
+		});
+		
+		
+		
+		
 		this.saveToLog.addActionListener(new ActionListener()
 		{public void actionPerformed(ActionEvent e) {
 			JFileChooser fileChoose= new JFileChooser();
 			fileChoose.showSaveDialog(new JFrame("save"));
 			fileChoose.setCurrentDirectory(new java.io.File("."));
 			fileChoose.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			
-			
 	        File file = new File("default2.log");
 	        File f=new File(fileChoose.getSelectedFile().getAbsolutePath());
+	        path.add(fileChoose.getSelectedFile().getAbsolutePath());
 	        FileWriter fw;
 			try {
 				fw = new FileWriter(f);
@@ -329,8 +342,10 @@ public class MainWindow extends Observable  implements Runnable{
 				 thread= new Thread[mapSett.getSettlements().length];
 				 for (int i=0; i<mapSett.getSettlements().length; i++) { 
 					 thread[i]= new Thread(mainWindow,mapSett.getSettlements()[i].getName());
-					 thread[i].start(); 				
+					 thread[i].start(); 
 			}
+					root.dispose();
+					m.OpenFrame(mapSett);
 
 		}
 		});
@@ -400,7 +415,8 @@ public class MainWindow extends Observable  implements Runnable{
 						p2=s.getNotSickPpl().get(j);
 						flag=s.getSickPpl().get(randNum).getVirus().tryToContagion(p1, p2);
 						if(flag) {
-							viruses=mw.mutationVirus(s.getSickPpl().get(randNum).getVirus());
+							StrategyMutation sm= new StrategyMutation(s.getSickPpl().get(randNum).getVirus());
+							viruses=mw.mutationVirus(sm.executeStrategy());
 							randVirus=rand.nextInt(viruses.size());
 							p2.contagion(viruses.get(randVirus));
 						}
@@ -446,13 +462,10 @@ public class MainWindow extends Observable  implements Runnable{
 			
 		}
 		this.deathPercent=0.0;
-		
-		
-		
-		
+		s.setRamzorColor(s.getRamzorColor().getName(s.contagiousPercent()));
 		sw=new StatisticsWindow(new Point(0,0), mapSett, mainWindow,m);
 		sw.colorChange();
-		
+				
 		try {
 			barrier.await();
 		} catch (InterruptedException e1) {
@@ -467,6 +480,10 @@ public class MainWindow extends Observable  implements Runnable{
 		return this.map;
 	}
 
+	public void setMap(PaintMap pm) {
+		this.map=pm;
+		
+	}
 	
 	public JFrame getRoot() {
 		return root;

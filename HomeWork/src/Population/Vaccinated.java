@@ -62,6 +62,7 @@ public class Vaccinated extends Person {
 		}
 		return false;
 	}
+	
 	/*
 	 * public String toString() { return
 	 * "Vaccinated {age= "+super.getAge()+" location= "+super.getLocation().toString

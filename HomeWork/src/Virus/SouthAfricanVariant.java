@@ -8,6 +8,18 @@ import Country.*;
 
 public class SouthAfricanVariant implements IVirus{
 	
+
+	private static SouthAfricanVariant getInstance=null;
+
+	private SouthAfricanVariant () {	}
+	
+	public static SouthAfricanVariant get_instance() {
+		  if (getInstance == null)
+			  getInstance = new SouthAfricanVariant();
+	        return getInstance;
+	    
+	}
+	
 	Random rand=new Random();
 	
 	public double calcDistance(Point p1 , Point p2) {
@@ -19,7 +31,13 @@ public class SouthAfricanVariant implements IVirus{
 		return Math.sqrt(d);
 	}
 	
+	public String getName() {
+		return "SouthAfricanVariant";
+	}
+	
+	
 	public double contagionProbability(Person p) {
+		Strategy st= new Strategy(p);
 		double contagionprobability;
 		long time;
 		Clock c= new Clock();
@@ -46,7 +64,7 @@ public class SouthAfricanVariant implements IVirus{
 			else 
 				contagionprobability = 0.5;
 		}
-		return contagionprobability*p.contagionProbability();
+		return contagionprobability*st.executeStrategy();
 		
 	}
 	

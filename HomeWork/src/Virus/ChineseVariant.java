@@ -11,9 +11,22 @@ import java.math.*;
 
 public class ChineseVariant implements IVirus {
 	
+
+	private static ChineseVariant getInstance=null;
+
+	private ChineseVariant () {	}
+	
+	public static ChineseVariant get_instance() {
+		  if (getInstance == null)
+			  getInstance = new ChineseVariant();
+	        return getInstance;
+	    
+	}
+	
 	Random rand= new Random();
 	
 	public double contagionProbability(Person p) {
+		Strategy st= new Strategy(p);
 		Clock c= new Clock();
 		long time;
 		double contagionprobability;
@@ -42,7 +55,7 @@ public class ChineseVariant implements IVirus {
 			else
 				contagionprobability = 0.7;
 		}
-		return contagionprobability*p.contagionProbability();
+		return contagionprobability*st.executeStrategy();
 	}
 	
 	public double calcDistance(Point p1 , Point p2) {
@@ -71,6 +84,9 @@ public class ChineseVariant implements IVirus {
 		return false;
 	}
 
+	public String getName() {
+		return "ChineseVariant";
+	}
 	
 	public boolean tryToKill(Sick s) {
 		int t=new Clock().calcTime(s.getContagiousTime());

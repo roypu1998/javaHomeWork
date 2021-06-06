@@ -57,41 +57,41 @@ public class MutationWindow extends JFrame {
 
 	}
 	
-	public List<IVirus> mutationVirus(IVirus nameVirus){
+	public List<IVirus> mutationVirus(String nameVirus){
 		int row;
 		List<IVirus> viruses= new ArrayList <>();
-		if(nameVirus instanceof BritishVariant) {
+		if(nameVirus.equals("BritishVariant")) {
 			row=0;	
 			for (int column=0; column<this.table.getColumnCount();column++) {
 					if(this.table.getValueAt(row, column).equals(true)) {
 						switch(column){
-						case 0: viruses.add(new BritishVariant());
-						case 1: viruses.add(new SouthAfricanVariant());
-						case 2: viruses.add(new ChineseVariant());
+						case 0: viruses.add(BritishVariant.get_instance());
+						case 1: viruses.add(SouthAfricanVariant.get_instance());
+						case 2: viruses.add(ChineseVariant.get_instance());
 						}
 					}
 			}
 		}
-		if(nameVirus instanceof SouthAfricanVariant) {
+		if(nameVirus.equals("SouthAfricanVariant")) {
 			row=1;	
 			for (int column=0; column<this.table.getColumnCount();column++) {
 					if(this.table.getValueAt(row, column).equals(true)) {
 						switch(column){
-						case 0: viruses.add(new BritishVariant());
-						case 1: viruses.add(new SouthAfricanVariant());
-						case 2: viruses.add(new ChineseVariant());
+						case 0: viruses.add(BritishVariant.get_instance());
+						case 1: viruses.add(SouthAfricanVariant.get_instance());
+						case 2: viruses.add(ChineseVariant.get_instance());
 						}
 					}
 			}
 		}
-		if(nameVirus instanceof ChineseVariant) {
+		if(nameVirus.equals("ChineseVariant")) {
 			row=2;	
 			for (int column=0; column<this.table.getColumnCount();column++) {
 					if(this.table.getValueAt(row, column).equals(true)) {
 						switch(column){
-						case 0: viruses.add(new BritishVariant());
-						case 1: viruses.add(new SouthAfricanVariant());
-						case 2: viruses.add(new ChineseVariant());
+						case 0: viruses.add(BritishVariant.get_instance());
+						case 1: viruses.add(SouthAfricanVariant.get_instance());
+						case 2: viruses.add(ChineseVariant.get_instance());
 						}
 					}
 			}

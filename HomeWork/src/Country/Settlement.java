@@ -53,9 +53,9 @@ public class Settlement {
 		String [] virusNames={"BritishVariant", "ChineseVariant", "SouthAfricaVariant"};
 		int random= rand.nextInt(3);
 		switch (random){
-		case 0: return new BritishVariant();
-		case 1: return new ChineseVariant();
-		case 2: return new SouthAfricanVariant();
+		case 0: return BritishVariant.get_instance();
+		case 1: return ChineseVariant.get_instance();
+		case 2: return SouthAfricanVariant.get_instance();
 		}
 		return null;
 		

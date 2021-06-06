@@ -3,7 +3,7 @@ package Country;
 import Population.Healthy;
 import Population.Person;
 
-public class Map {
+public class Map implements Iterator{
 	
 	private Settlement [] settlements;
 	
@@ -12,30 +12,26 @@ public class Map {
 		return settlements;
 	}
 	
+	
 	public int Size() {
 		return this.settlements.length;
 	}
 	
-	public void setSize(int size) {
-		
-		this.settlements=new Settlement[size];
-	}
 
+	@Override
 	public void updateSettelments(Settlement sett,int index) {
-		
 		this.getSettlements()[index]=sett;
 		
 	}
-	
-	public void printSett() {
-		System.out.println("hey2");
-		for(int i=0; i<this.getSettlements().length; i++)
-			System.out.println(this.getSettlements()[i]);
+
+	@Override
+	public Settlement at(int rowIndex) {
+		return this.settlements[rowIndex];
 	}
 
-	public Settlement at(int rowIndex) {
-
-		return this.settlements[rowIndex];
+	
+	public void setSize(int size) {	
+			this.settlements=new Settlement[size];
 	}
 	
 	/*

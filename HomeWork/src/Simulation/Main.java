@@ -18,6 +18,7 @@ import Country.*;
 import IO.SimulationFile;
 import Population.*;
 import UI.MainWindow;
+import UI.PaintMap;
 import Virus.*;
 import Location.*;
 public class Main{
@@ -35,6 +36,7 @@ public class Main{
 		for(int i=0; i<mapSett.Size();i++) {
 			settlement.add(mapSett.getSettlements()[i]);
 		}
+		mw.setMap(new PaintMap(settlement));
 		mw.setPaintMap(settlement);
 		mw.BuildFrame();
 		JMenuBar menuBar = new JMenuBar();

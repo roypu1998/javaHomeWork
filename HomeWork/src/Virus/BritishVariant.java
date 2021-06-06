@@ -6,18 +6,34 @@ import Simulation.Clock;
 
 public class BritishVariant implements IVirus{
 	
+	private static BritishVariant getInstance=null;
+
+	private BritishVariant () {	}
+	
+	public static BritishVariant get_instance() {
+		  if (getInstance == null)
+			  getInstance = new BritishVariant();
+	        return getInstance;
+	    
+	}
+	
 	Random rand = new Random();
 
+	
 	public double contagionProbability(Person p) {
+		Strategy st= new Strategy(p);
 		Clock c= new Clock();
 		if(p instanceof Sick) {
 			long time=c.calcTime( ((Sick) p).getContagiousTime());
 			if (time<5)
 				return 0;
 		}
-		return 0.70*p.contagionProbability();
+		return 0.70*st.executeStrategy();
 	}
 
+	public String getName() {
+		return "BritishVariant";
+	}
 	
 	public double calcDistance(Point p1 , Point p2) {
 		

@@ -162,6 +162,7 @@ public class StatisticsWindow {
 	
 	public void recreateTable() {
 		this.setMapSett(mapSett);
+		
 		this.getStatisticWindow().getContentPane().add(this.getHigh(),"North");
 		
 		this.getStatisticWindow().getContentPane().add(this.getMiddle(),"Center");
@@ -276,6 +277,7 @@ public class StatisticsWindow {
 							s.setVacineNum(numCount);
 							dialog.dispose();
 							recreateTable();
+							colorChange();
 
 						}
 						}
@@ -295,6 +297,7 @@ public class StatisticsWindow {
 			statisticWindow.dispose();
 			mw.getRoot().dispose();
 			m.OpenFrame(mapSett);
+			
 			change=0;
 		}
 	}
